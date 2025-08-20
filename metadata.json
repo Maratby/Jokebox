@@ -1,0 +1,13 @@
+{
+	"id": "Jokebox",
+	"name": "Jokebox",
+	"display_name": "Jokebox",
+	"author": ["Maratby"],
+	"description": "My mandatory Stupid Shit Mod, where I make things that are funny because they are funny. I don't want to completely eliminate balance, though.",
+	"prefix": "insj",
+	"main_file": "jokebox.lua",
+	"priority": 8,
+	"badge_colour": "000094",
+	"badge_text_colour": "FFFFFF",
+	"version": "0.0.1-INDEV",
+}
