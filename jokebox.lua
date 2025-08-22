@@ -6,6 +6,11 @@ Jokebox = {}
 Jokebox_Mod = SMODS.current_mod
 Jokebox_Config = Jokebox_Mod.config
 
+---it's a surprise tool that will help us later
+SMODS.current_mod.optional_features = function()
+    return { retrigger_joker = true }
+end
+
 SMODS.Atlas {
 	key = "JokeboxJokers",
 	path = "jokers.png",
@@ -28,6 +33,25 @@ SMODS.Atlas {
 	px = 71,
 	py = 95,
 }
+
+---check if card in collection (thanks minty and or pokermon)
+Jokebox.in_collection = function(card)
+    if G.your_collection then
+        for k, v in pairs(G.your_collection) do
+            if card.area == v then
+                return true
+            end
+        end
+    end
+    return false
+end
+
+---get percentage from two values
+Jokebox.Get_Percentage = function(num1, num2)
+	local temp1 = num2 / num1
+	local temp2 = temp1 * 100
+	return math.floor(temp2 + 0.5)
+end
 
 ---jevil moving
 SMODS.DrawStep {

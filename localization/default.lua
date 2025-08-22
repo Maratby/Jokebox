@@ -87,9 +87,19 @@ return {
 			["j_insj_notepad"] = {
 				["name"] = "Notepad",
 				["text"] = {
-					"{X:chips,C:white}X#1#{} Chips for each {C:dark_edition}mod installed{} {C:inactive}(#3#)",
+					"{X:chips,C:white}X#1#{} Chips for each {C:dark_edition}Balatro Mod installed{} {C:inactive}(#3#)",
 					"{X:mult,C:white}X#1#{} Mult for each {C:dark_edition}lovely log{} {C:inactive}(#2#)",
-					"{C:inactive}(File System collection - Only works on Windows!)"
+					"{C:inactive,s:0.7}(File System collection - Designed for Windows!)"
+				},
+			},
+			["j_insj_mantis"] = {
+				["name"] = "Psycho Mantis",
+				["text"] = {
+					"{C:dark_edition}Copies{} the abilities of {C:attention}adjacent Jokers{}",
+					"{C:dark_edition}Retriggers {C:attention}adjacent Jokers{}",
+					"{C:red}Effects only activate if Mantis is in the 4th Joker Slot",
+					"{C:inactive,s:0.7}(File System collection - Designed for Windows!)",
+					'{C:dark_edition,s:0.8,E:1}"#3#"',
 				},
 			},
 		},

@@ -170,76 +170,6 @@ SMODS.Joker {
 	end,
 }
 
-SMODS.Joker {
-	key = 'jevil',
-	config = { modifier = 99, extra = { timer = 0 } },
-	discovered = false,
-	rarity = 4,
-	cost = 20,
-	atlas = 'JokeboxJevil',
-	pos = { x = 0, y = 0 },
-	blueprint_compat = false,
-
-	add_to_deck = function(self, card, from_debuff)
-		G.hand:change_size(card.ability.modifier)
-		G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.modifier
-		G.GAME.round_resets.discards = G.GAME.round_resets.discards + card.ability.modifier
-		SMODS.change_play_limit(card.ability.modifier)
-		SMODS.change_discard_limit(card.ability.modifier)
-		change_shop_size(20)
-		---more boosters_in_shop
-		G.GAME.modifiers.extra_boosters = (G.GAME.modifiers.extra_boosters or 0) + 10
-		if G.shop_booster and G.shop_booster.cards then
-			G.shop_booster.config.card_limit = G.GAME.starting_params.boosters_in_shop +
-				(G.GAME.modifiers.extra_boosters or 0)
-			for i = #G.shop_booster.cards + 1, G.shop_booster.config.card_limit do
-				G.GAME.current_round.used_packs[i] = get_pack('shop_pack').key
-				local card = Card(G.shop_booster.T.x + G.shop_booster.T.w / 2,
-					G.shop_booster.T.y, G.CARD_W * 1.27, G.CARD_H * 1.27, G.P_CARDS.empty,
-					G.P_CENTERS[G.GAME.current_round.used_packs[i]],
-					{ bypass_discovery_center = true, bypass_discovery_ui = true })
-				create_shop_card_ui(card, 'Booster', G.shop_booster)
-				card.ability.booster_pos = i
-				G.shop_booster:emplace(card)
-			end
-		end
-	end,
-	remove_from_deck = function(self, card, from_debuff)
-		if G.hand.config.card_limit < 100 then
-			G.hand.config.card_limit = 1
-		else
-			G.hand:change_size(-card.ability.modifier)
-		end
-		G.GAME.modifiers.extra_boosters = math.max(G.GAME.modifiers.extra_boosters - 10, 0)
-
-		G.GAME.round_resets.hands = G.GAME.round_resets.hands - card.ability.modifier
-		G.GAME.round_resets.discards = G.GAME.round_resets.discards - card.ability.modifier
-		SMODS.change_play_limit(-card.ability.modifier)
-		SMODS.change_discard_limit(-card.ability.modifier)
-		change_shop_size(-20)
-	end,
-	update = function(self, card)
-		---this if statement makes jevil not do this in the collection, because it was really fucking annoying
-		if card and card.area then
-			---code that fucks up the UI
-			local extra = card.ability.extra
-			local fps = 0.04 -- corruption speed higher number is faster lower number is more extreme but slower
-			local current_time = G.TIMERS.REAL
-			extra.timer = (extra.timer or 0) + G.TIMERS.REAL
-			if extra.timer >= (2.5 / fps) then
-				extra.timer = 0
-				G.TIMERS.REAL = 0
-			end
-		end
-	end,
-	calculate = function(self, card, context)
-		if context.repetition and context.cardarea == G.play then
-			return {
-				repetitions = math.random(1, 5),
-			}
-		end
-	end
-}
 
 SMODS.Joker {
 	key = "anvil_shaped",
@@ -371,6 +301,77 @@ SMODS.Joker {
 				win_game()
 				G.GAME.won = true
 			end
+		end
+	end
+}
+
+SMODS.Joker {
+	key = 'jevil',
+	config = { modifier = 99, extra = { timer = 0 } },
+	discovered = false,
+	rarity = 4,
+	cost = 20,
+	atlas = 'JokeboxJevil',
+	pos = { x = 0, y = 0 },
+	blueprint_compat = false,
+
+	add_to_deck = function(self, card, from_debuff)
+		G.hand:change_size(card.ability.modifier)
+		G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.modifier
+		G.GAME.round_resets.discards = G.GAME.round_resets.discards + card.ability.modifier
+		SMODS.change_play_limit(card.ability.modifier)
+		SMODS.change_discard_limit(card.ability.modifier)
+		change_shop_size(20)
+		---more boosters_in_shop
+		G.GAME.modifiers.extra_boosters = (G.GAME.modifiers.extra_boosters or 0) + 10
+		if G.shop_booster and G.shop_booster.cards then
+			G.shop_booster.config.card_limit = G.GAME.starting_params.boosters_in_shop +
+				(G.GAME.modifiers.extra_boosters or 0)
+			for i = #G.shop_booster.cards + 1, G.shop_booster.config.card_limit do
+				G.GAME.current_round.used_packs[i] = get_pack('shop_pack').key
+				local card = Card(G.shop_booster.T.x + G.shop_booster.T.w / 2,
+					G.shop_booster.T.y, G.CARD_W * 1.27, G.CARD_H * 1.27, G.P_CARDS.empty,
+					G.P_CENTERS[G.GAME.current_round.used_packs[i]],
+					{ bypass_discovery_center = true, bypass_discovery_ui = true })
+				create_shop_card_ui(card, 'Booster', G.shop_booster)
+				card.ability.booster_pos = i
+				G.shop_booster:emplace(card)
+			end
+		end
+	end,
+	remove_from_deck = function(self, card, from_debuff)
+		if G.hand.config.card_limit < 100 then
+			G.hand.config.card_limit = 1
+		else
+			G.hand:change_size(-card.ability.modifier)
+		end
+		G.GAME.modifiers.extra_boosters = math.max(G.GAME.modifiers.extra_boosters - 10, 0)
+
+		G.GAME.round_resets.hands = G.GAME.round_resets.hands - card.ability.modifier
+		G.GAME.round_resets.discards = G.GAME.round_resets.discards - card.ability.modifier
+		SMODS.change_play_limit(-card.ability.modifier)
+		SMODS.change_discard_limit(-card.ability.modifier)
+		change_shop_size(-20)
+	end,
+	update = function(self, card)
+		---this if statement makes jevil not do this in the collection, because it was really fucking annoying
+		if not Jokebox.in_collection(card) then
+			---code that fucks up the UI
+			local extra = card.ability.extra
+			local fps = 0.04 -- corruption speed higher number is faster lower number is more extreme but slower
+			local current_time = G.TIMERS.REAL
+			extra.timer = (extra.timer or 0) + G.TIMERS.REAL
+			if extra.timer >= (2.5 / fps) then
+				extra.timer = 0
+				G.TIMERS.REAL = 0
+			end
+		end
+	end,
+	calculate = function(self, card, context)
+		if context.repetition and context.cardarea == G.play then
+			return {
+				repetitions = math.random(1, 5),
+			}
 		end
 	end
 }
