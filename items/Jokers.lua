@@ -405,6 +405,7 @@ SMODS.Joker {
 			card.ability.eternal = true
 		end
 		if context.before and not context.blueprint then
+			card.pinned = nil
 			G.E_MANAGER:add_event(Event({
 				blockable = true,
 				blocking = true,
@@ -422,9 +423,16 @@ SMODS.Joker {
 				end
 			end
 			if G.jokers.cards[my_pos + 1] then
-				card.pinned = nil
-				G.jokers.cards[my_pos + 1].pinned = true
-				card.pinned = true
+				G.E_MANAGER:add_event(Event({
+				blockable = true,
+				blocking = true,
+				func = function()
+					card:juice_up()
+					G.jokers.cards[my_pos + 1].pinned = true
+					card.pinned = true
+					return true
+				end
+			}))
 			else
 				SMODS.debuff_card(card, true, "demoknight-tf2")
 				for index, value in ipairs(G.jokers.cards) do
