@@ -53,7 +53,17 @@ Jokebox.Get_Percentage = function(num1, num2)
 	return math.floor(temp2 + 0.5)
 end
 
----jevil moving
+---Adds a dummy function that does nothing if Talisman isn't loaded, lets me avoid having Talisman be a dependency
+---and avoid crashes if Talisman is loaded
+to_big = to_big or function(num)
+	return num
+end
+to_number = to_number or function(num)
+	return num
+end
+
+
+---jevil moving thanks N Joyousspring
 SMODS.DrawStep {
     key = 'insj_jevil_chaos',
     order = 100,
@@ -123,6 +133,18 @@ SMODS.load_file("items/Jokers.lua")()
 if Jokebox_Config.FileSystem == true then
 	SMODS.load_file("items/FileSystem.lua")()
 end
+
+
+---Dented rarity
+SMODS.Rarity {
+	key = "insj_dented",
+	default_weight = 0,
+	badge_colour = G.C.RED,
+	pools = { ["Joker"] = false },
+	get_weight = function(self, weight, object_type)
+		return weight
+	end,
+}
 ---hook for playing more than 6 cards at a time
 local canplayref = G.FUNCS.can_play
 G.FUNCS.can_play = function(e)
@@ -134,6 +156,17 @@ G.FUNCS.can_play = function(e)
 		end
 	end
 end
+
+---hook for undebuffing Demoknight at end of round
+local end_round_ref = end_round
+    function end_round()
+        for index, value in ipairs(G.jokers.cards) do
+			if value.config.center.key == "j_insj_demoknight" then
+				SMODS.debuff_card(value, false, "demoknight-tf2")
+			end
+		end
+        end_round_ref()
+    end
 
 ---function for spawning vouchers
 function compend_redeem_voucher(local_voucher, _delay)
@@ -151,6 +184,28 @@ function compend_redeem_voucher(local_voucher, _delay)
 			return true
 		end
 	}))
+end
+
+---function for swapping a joker out for a new one
+function Jokebox.change_card(card_object, new_card_key)
+	local new_card_object = SMODS.create_card({
+		area = G.jokers,
+		key = new_card_key
+	})
+
+	if card_object.edition then
+		new_card_object:set_edition(card_object.edition)
+	end
+	if card_object.ability.eternal == true then
+		new_card_object.ability.eternal = true
+	elseif card_object.ability.perishable == true then
+		new_card_object.ability.perishable = true
+	elseif card_object.ability.rental == true then
+		new_card_object.ability.rental = true
+	end
+	new_card_object:add_to_deck()
+	G.jokers:emplace(new_card_object)
+	return new_card_object
 end
 
 ---jevil noises
@@ -178,6 +233,35 @@ SMODS.Sound({
 	pitch = 1,
 })
 
+SMODS.Sound({
+	key = "eekum_bokum",
+	path = "eekum_bokum.mp3",
+	pitch = 1,
+})
+
+SMODS.Sound({
+	key = "demoknight-1",
+	path = "tf2-demoman-charge-sound-1.mp3",
+	pitch = 1,
+})
+
+SMODS.Sound({
+	key = "demoknight-2",
+	path = "tf2-demoman-charge-sound-2.mp3",
+	pitch = 1,
+})
+
+SMODS.Sound({
+	key = "demoknight-3",
+	path = "tf2-demoman-charge-sound-3.mp3",
+	pitch = 1,
+})
+
+SMODS.Sound({
+	key = "pan",
+	path = "pan.mp3",
+	pitch = 1,
+})
 ---Config UI
 
 Jokebox_Mod.config_tab = function()

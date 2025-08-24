@@ -92,6 +92,28 @@ SMODS.Joker {
 }
 
 SMODS.Joker {
+	key = "gd_colon",
+	pos = { x = 0, y = 3 },
+	atlas = "JokeboxBetter2X",
+	rarity = 1,
+	discovered = true,
+	blueprint_compat = true,
+	perishable_compat = false,
+	rental_compat = false,
+	eternal_compat = false,
+	cost = 4,
+	calculate = function(self, card, context)
+		if context.repetition and context.cardarea == G.play then
+			if context.other_card == G.play.cards[#G.play.cards] then
+				return {
+					repetitions = 1
+				}
+			end
+		end
+	end,
+}
+
+SMODS.Joker {
 	key = "birthday",
 	pos = { x = 0, y = 1 },
 	atlas = "JokeboxJokers",
@@ -138,6 +160,7 @@ SMODS.Joker {
 	pos = { x = 4, y = 0 },
 	atlas = "JokeboxJokers",
 	rarity = 1,
+	discovered = true,
 	blueprint_compat = true,
 	immutable = true,
 	cost = 8,
@@ -304,6 +327,303 @@ SMODS.Joker {
 		end
 	end
 }
+
+SMODS.Joker {
+	key = "eekum_jokum",
+	pos = { x = 2, y = 0 },
+	atlas = "JokeboxBetter2X",
+	rarity = 2,
+	blueprint_compat = false,
+	immutable = true,
+	cost = 8,
+	config = { tally = 0, tallymax = 5 },
+	loc_vars = function(self, info_queue, card)
+		info_queue[#info_queue + 1] = G.P_CENTERS.j_idol
+		info_queue[#info_queue + 1] = G.P_CENTERS.j_trading
+		return { vars = { card.ability.tally, card.ability.tallymax } }
+	end,
+	calculate = function(self, card, context)
+		if context.end_of_round and context.main_eval and not context.blueprint then
+			card.ability.tally = card.ability.tally + 1
+			if card.ability.tally >= card.ability.tallymax then
+				local eval = function(card) return card.ability.tally <= card.ability.tallymax end
+				juice_card_until(card, eval, true)
+			end
+			return {
+				message = localize('k_upgrade_ex'),
+				colour = G.C.GREEN,
+				card = card
+			}
+		end
+		if context.selling_self and card.ability.tally >= card.ability.tallymax and not context.blueprint then
+			play_sound("insj_eekum_bokum", 1, 1)
+			Jokebox_Cardmaker(false, false, "j_idol")
+			Jokebox_Cardmaker("e_negative", false, "j_trading")
+		end
+	end,
+}
+
+SMODS.Joker {
+	key = "demoknight",
+	pos = { x = 3, y = 0 },
+	atlas = "JokeboxBetter2X",
+	rarity = 3,
+	discovered = true,
+	blueprint_compat = true,
+	perishable_compat = false,
+	rental_compat = false,
+	immutable = true,
+	cost = 9,
+	config = { xmult = 1.75 },
+	loc_vars = function(self, info_queue, card)
+		return { vars = { card.ability.xmult } }
+	end,
+	set_ability = function(self, card, initial, delay_sprites)
+		card.ability.rental = nil
+		card.ability.perishable = nil
+		card.pinned = nil
+	end,
+	remove_from_deck = function(self, card, from_debuff)
+		for index, value in ipairs(G.jokers.cards) do
+			if value.pinned then
+				value.pinned = nil
+			end
+		end
+		card.pinned = false
+		card.ability.eternal = false
+	end,
+	calculate = function(self, card, context)
+		if context.setting_blind and not context.blueprint then
+			for index, value in ipairs(G.jokers.cards) do
+				if value.pinned then
+					value.pinned = nil
+				end
+			end
+			card.pinned = true
+			card.ability.eternal = true
+		end
+		if context.before and not context.blueprint then
+			G.E_MANAGER:add_event(Event({
+				blockable = true,
+				blocking = true,
+				func = function()
+					card:juice_up()
+					local temp = math.random(1, 3)
+					play_sound("insj_demoknight-" .. temp, 1, 1)
+					return true
+				end
+			}))
+			local my_pos
+			for index, value in ipairs(G.jokers.cards) do
+				if value == card then
+					my_pos = index
+				end
+			end
+			if G.jokers.cards[my_pos + 1] then
+				card.pinned = nil
+				G.jokers.cards[my_pos + 1].pinned = true
+				card.pinned = true
+			else
+				SMODS.debuff_card(card, true, "demoknight-tf2")
+				for index, value in ipairs(G.jokers.cards) do
+					if value.pinned then
+						value.pinned = nil
+					end
+				end
+				card.pinned = false
+				card.ability.eternal = false
+			end
+		end
+		if context.other_joker and context.other_joker.pinned then
+			return {
+				xmult = card.ability.xmult,
+				message_card = context.other_joker
+			}
+		end
+		if context.end_of_round and context.main_eval then
+			for index, value in ipairs(G.jokers.cards) do
+				if value.pinned then
+					value.pinned = nil
+				end
+			end
+			card.pinned = false
+			card.ability.eternal = false
+		end
+	end,
+}
+
+SMODS.Joker {
+	key = "smack",
+	pos = { x = 1, y = 1 },
+	atlas = "JokeboxJokers",
+	rarity = 2,
+	blueprint_compat = true,
+	discovered = true,
+	cost = 6,
+	config = { extra = { xmult = 1, xmult_gain = 0.75 }, },
+	loc_vars = function(self, info_queue, card)
+		info_queue[#info_queue + 1] = G.P_CENTERS.j_insj_jibnor
+		return { vars = { card.ability.extra.xmult_gain, card.ability.extra.xmult } }
+	end,
+	calculate = function(self, card, context)
+		if context.setting_blind and not context.blueprint then
+			local my_pos = nil
+			for i = 1, #G.jokers.cards do
+				if G.jokers.cards[i] == card then
+					my_pos = i
+					break
+				end
+			end
+			if my_pos and G.jokers.cards[my_pos + 1] and not SMODS.is_eternal(G.jokers.cards[my_pos + 1], card) and not G.jokers.cards[my_pos + 1].getting_sliced then
+				local sliced_card = G.jokers.cards[my_pos + 1]
+				if sliced_card.config.center.key ~= "j_insj_jibnor" then
+					sliced_card.getting_sliced = true
+					G.GAME.joker_buffer = G.GAME.joker_buffer - 1
+					G.E_MANAGER:add_event(Event({
+						func = function()
+							G.GAME.joker_buffer = 0
+							card.ability.extra.xmult = card.ability.extra.xmult + card.ability.extra.xmult_gain
+							card:juice_up(1.5, 2)
+							---replace sliced_card with Jibnor
+							Jokebox.change_card(sliced_card, "j_insj_jibnor")
+							sliced_card:start_dissolve({ HEX("57ecab") }, nil, 1.6)
+							play_sound('insj_pan', 1, 1)
+							return true
+						end
+					}))
+				end
+			end
+		end
+		if context.joker_main then
+			return {
+				xmult = card.ability.extra.xmult
+			}
+		end
+	end
+}
+
+SMODS.Joker {
+	key = "jibnor",
+	pos = { x = 2, y = 1 },
+	atlas = "JokeboxJokers",
+	rarity = "insj_dented",
+	blueprint_compat = true,
+	no_collection = true,
+	discovered = true,
+	cost = -2,
+	config = { extra = { mult = -4 }, },
+	loc_vars = function(self, info_queue, card)
+		return { vars = { card.ability.extra.mult } }
+	end,
+	calculate = function(self, card, context)
+		if card.sell_cost >= 0 then
+			card.sell_cost = card.sell_cost * -1
+		end
+		if context.joker_main then
+			return {
+				mult = card.ability.extra.mult
+			}
+		end
+	end
+}
+
+SMODS.Joker {
+	key = "job_app",
+	pos = { x = 4, y = 0 },
+	atlas = "JokeboxBetter2X",
+	rarity = 2,
+	blueprint_compat = true,
+	discovered = true,
+	cost = 0,
+	add_to_deck = function(self, card, from_debuff)
+		if not from_debuff then
+			ease_dollars(-10)
+		end
+	end,
+	calculate = function(self, card, context)
+		card.sell_cost = -10
+		if context.end_of_round and context.beat_boss and context.main_eval and to_number(G.GAME.dollars) < 10000 then
+			ease_dollars(-to_big((to_number(G.GAME.dollars) * 0.05)))
+		end
+		if context.before and (next(context.poker_hands['Straight Flush'])) then
+			ease_dollars(to_big((to_number(G.GAME.dollars) * 0.25)))
+		end
+	end
+}
+
+SMODS.Joker {
+	key = "marie",
+	pos = { x = 0, y = 1 },
+	soul_pos = { x = 0, y = 2 },
+	atlas = "JokeboxBetter2X",
+	rarity = 4,
+	blueprint_compat = false,
+	discovered = false,
+	cost = 20,
+	config = { eaten = 0, blind_rates = 1, extra = { BP = 0 } },
+	loc_vars = function(self, info_queue, card)
+		return { vars = { card.ability.eaten } }
+	end,
+	calculate = function(self, card, context)
+		if context.after then
+			G.E_MANAGER:add_event(Event({
+				blockable = true,
+				blocking = true,
+				func = function()
+					card:juice_up()
+					local temp = G.GAME.chips
+					local temprand = math.random(5, 10) / 100
+					G.GAME.chips = G.GAME.chips - G.GAME.chips * temprand
+					card.ability.eaten = temp - G.GAME.chips
+					print(card.ability.eaten)
+					return true
+				end
+			}))
+		end
+		if context.before then
+			card.ability.blind_rates = 300 / G.GAME.blind.chips
+		end
+		if context.end_of_round then
+			card.ability.eaten = card.ability.eaten * card.ability.blind_rates
+			while card.ability.eaten >= 100 do
+				card.ability.eaten = card.ability.eaten - 100
+				card.ability.extra.BP = card.ability.extra.BP + 1
+			end
+		end
+		if context.joker_main then
+			local temptally = 1
+			if Tsunami then
+				temptally = temptally + 1
+			end
+			if Referee then
+				temptally = temptally + 1
+			end
+			if Splatro then
+				temptally = temptally + 1
+			end
+			if Fortune then
+				temptally = temptally + 1
+			end
+			if Tsunami then
+				temptally = temptally + 1
+			end
+			if Compendium then
+				temptally = temptally + 1
+			end
+			xchips = 2 * temptally
+		end
+	end
+}
+
+
+local card_is_suit_ref = Card.is_suit
+function Card:is_suit(suit, bypass_debuff, flush_calc)
+	local ret = card_is_suit_ref(self, suit, bypass_debuff, flush_calc)
+	if not ret and not SMODS.has_no_suit(self) and next(SMODS.find_card("j_insj_marie")) then
+		return true
+	end
+	return ret
+end
 
 SMODS.Joker {
 	key = 'jevil',

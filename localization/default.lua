@@ -1,4 +1,9 @@
 return {
+	["misc"] = {
+		["dictionary"] = {
+			["k_insj_dented"] = "Dented",
+		},
+	},
 	["descriptions"] = {
 		["Joker"] = {
 			["j_insj_getwellsoon"] = {
@@ -65,6 +70,13 @@ return {
 					"otherwise, {C:red}lose the run",
 				},
 			},
+			["j_insj_gd_colon"] = {
+				["name"] = "GD Colon Plush",
+				["text"] = {
+					"{C:attention}Retrigger{} the {C:attention}last{} card in each played hand",
+					"{C:inactive,s:0.8}\"I love GD Cologne\"",
+				},
+			},
 			["j_insj_birthday"] = {
 				["name"] = "Birthday Joker",
 				["text"] = {
@@ -76,6 +88,63 @@ return {
 				["text"] = {
 					'"{X;mult,C;white}X#1#{} Mult if",',
 					'"{C;attention}Talisman{} is installed"',
+				},
+			},
+			["j_insj_eekum_jokum"] = {
+				["name"] = 'Eekum Bokum',
+				["text"] = {
+					'{C:money}Sell{} this card after {C:attention}#2# {C:inactive}[#1#]{} Rounds',
+					'to create {C:attention}The Idol{} and {C:dark_edition}Negative{} {C:attention}Trading Card{}',
+					"{C:inactive}(don't need room)"
+				},
+			},
+			["j_insj_demoknight"] = {
+				["name"] = 'Demoknight TF2',
+				["text"] = {
+					"{C:attention}Pins self to {C:attention}leftmost{} Joker Slot when {C:attention}Blind{} is selected",
+					"Before each {C:blue}Hand{}, this Joker {C:dark_edition}Charges{} through the Joker to its {C:attention}right",
+					"{C:dark_edition}Charging{} through a Joker {C:attention}Pins{} it to the left of this Joker",
+					"When this Joker {C:dark_edition}Charges{} from the {C:attention}rightmost slot{},",
+					"unpin all Jokers and {C:red}debuff{} this Joker until end of round",
+					"All {C:attention}Pinned{} Jokers give {X:mult,C:white}X#1#{} Mult",
+					"{C:inactive}(this card is Eternal while it is Pinned)",
+					"{C:inactive,s:0.85}(remove Pinned from all Jokers and Eternal from this Joker at end of round or when debuffed)",
+					'{C:inactive,s:0.7}"Demoknight\'s Charge is C O M P L I C A T E D" - Solarlight TF2',
+				},
+			},
+			["j_insj_smack"] = {
+				["name"] = 'SMACK',
+				["text"] = {
+					"{C:attention}Smacks{} the joker to the {C:attention}Right{} with a {C:dark_edition}Frying Pan",
+					"This joker gains {X:mult,C:white}X#1#{} Mult for each joker {C:attention}Smacked{}",
+					"{C:inactive}(Smacked Jokers become Jibnor)",
+					"{C:inactive}(currently {X:mult,C:white}X#2#{C:inactive} Mult)",
+				},
+			},
+			["j_insj_jibnor"] = {
+				["name"] = 'Jibnor',
+				["text"] = {
+					"{C:red}#1#{} Mult",
+				},
+			},
+			["j_insj_job_app"] = {
+				["name"] = 'Job Application',
+				["text"] = {
+					"{C:red}Lose $10 when added to Deck",
+					"{C:red}Pay 10% of your current money in Taxes when Boss Blind is defeated",
+					"{C:money}Earn 25%{} of current money each time you play a {C:attention}Straight Flush",
+					"{C:red}Red{} effects do not trigger if you have at least {C:money}$10,000"
+				},
+			},
+			["j_insj_marie"] = {
+				["name"] = "Marie",
+				["text"] = {
+					"This Joker is {C:dark_edition}Colorblind",
+					"This Joker steals {C:attention}some{} of your {C:blue}Chips{} after each {C:blue}Hand",
+					"Converts stolen {C:blue}Chips{} into {C:dark_edition}BP{} at {C:attention}end of round",
+					"{X:chips,C:white}X2{} Chips for each of{C:dark_edition,E:1}Maratby's{} mods installed",
+					"{C:inactive,s:0.9}(That's me! I'm the mod dev! :D)",
+					"{C:inactive}(currently {C:dark_edition}#1#%{C:inactive} progress to next BP Gain)"
 				},
 			},
 			["j_insj_jevil"] = {
