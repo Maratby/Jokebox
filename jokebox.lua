@@ -292,6 +292,27 @@ Jokebox_Mod.config_tab = function()
 				}
 			},
 
+			{
+				n = G.UIT.R,
+				config = { align = "cl", padding = 0 },
+				nodes = {
+					{
+						n = G.UIT.C,
+						config = { align = "cl", padding = 0.05 },
+						nodes = {
+							create_toggle { col = true, label = "", scale = 1, w = 0, shadow = true, ref_table = Jokebox_Config, ref_value = "Eekum_Toggle" },
+						}
+					},
+					{
+						n = G.UIT.C,
+						config = { align = "c", padding = 0 },
+						nodes = {
+							{ n = G.UIT.T, config = { text = "Enable \"Eekum Bokum\"'s info_queues (they crash sometimes?)", scale = 0.5, colour = G.C.UI.TEXT_LIGHT } },
+						}
+					},
+				}
+			},
+
 		}
 	}
 end

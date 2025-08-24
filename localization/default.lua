@@ -5,6 +5,25 @@ return {
 		},
 	},
 	["descriptions"] = {
+		["Other"] = {
+			["j_insj_fake_trading"] = {
+				["name"] = "Trading Card",
+				["text"] = {
+					"If {C:attention}first discard{} of round",
+                    "has only {C:attention}1{} card, destroy",
+                    "it and earn {C:money}$3",
+				},
+			},
+			["j_insj_fake_idol"] = {
+				["name"] = "The Idol",
+				["text"] = {
+					"Each played {C:attention}Ace",
+                    "of Spades gives",
+                    "{X:mult,C:white} X2 {} Mult when scored",
+                    "{s:0.8}Card changes every round",
+				},
+			},
+		},
 		["Joker"] = {
 			["j_insj_getwellsoon"] = {
 				["name"] = "Get Well Soon Card",

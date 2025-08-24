@@ -338,8 +338,10 @@ SMODS.Joker {
 	cost = 8,
 	config = { tally = 0, tallymax = 5 },
 	loc_vars = function(self, info_queue, card)
-		info_queue[#info_queue + 1] = G.P_CENTERS.j_idol
-		info_queue[#info_queue + 1] = G.P_CENTERS.j_trading
+		if Jokebox_Config.Eekum_Toggle == true then
+			info_queue[#info_queue + 1] = { key = "j_insj_fake_idol", set = "Other" }
+			info_queue[#info_queue + 1] = { key = "j_insj_fake_trading", set = "Other" }
+		end
 		return { vars = { card.ability.tally, card.ability.tallymax } }
 	end,
 	calculate = function(self, card, context)
