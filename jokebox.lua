@@ -262,6 +262,55 @@ SMODS.Sound({
 	path = "pan.mp3",
 	pitch = 1,
 })
+
+
+SMODS.Sound({
+	key = "winton-1",
+	path = "winton\\winton-1.mp3",
+	pitch = 1,
+})
+
+SMODS.Sound({
+	key = "winton-2",
+	path = "winton\\winton-2.ogg",
+	pitch = 1,
+})
+
+SMODS.Sound({
+	key = "winton-3",
+	path = "winton\\winton-3.ogg",
+	pitch = 1,
+})
+
+SMODS.Sound({
+	key = "winton-4",
+	path = "winton\\winton-4.ogg",
+	pitch = 1,
+})
+
+SMODS.Sound({
+	key = "winton-5",
+	path = "winton\\winton-5.ogg",
+	pitch = 1,
+})
+
+SMODS.Sound({
+	key = "winton-6",
+	path = "winton\\winton-6.ogg",
+	pitch = 1,
+})
+
+SMODS.Sound({
+	key = "winton-7",
+	path = "winton\\winton-7.ogg",
+	pitch = 1,
+})
+
+SMODS.Sound({
+	key = "winton-rare",
+	path = "winton\\winton-rare.mp3",
+	pitch = 1,
+})
 ---Config UI
 
 Jokebox_Mod.config_tab = function()

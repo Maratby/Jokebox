@@ -71,70 +71,6 @@ SMODS.Joker {
 }
 
 SMODS.Joker {
-	key = "blue_eyes",
-	pos = { x = 3, y = 0 },
-	atlas = "JokeboxJokers",
-	rarity = 1,
-	blueprint_compat = true,
-	discovered = true,
-	cost = 2,
-	config = { extra = { mult = 4 }, },
-	loc_vars = function(self, info_queue, card)
-		return { vars = { card.ability.extra.mult } }
-	end,
-	calculate = function(self, card, context)
-		if context.joker_main then
-			return {
-				mult = card.ability.extra.mult
-			}
-		end
-	end
-}
-
-SMODS.Joker {
-	key = "gd_colon",
-	pos = { x = 0, y = 3 },
-	atlas = "JokeboxBetter2X",
-	rarity = 1,
-	discovered = true,
-	blueprint_compat = true,
-	perishable_compat = false,
-	rental_compat = false,
-	eternal_compat = false,
-	cost = 4,
-	calculate = function(self, card, context)
-		if context.repetition and context.cardarea == G.play then
-			if context.other_card == G.play.cards[#G.play.cards] then
-				return {
-					repetitions = 1
-				}
-			end
-		end
-	end,
-}
-
-SMODS.Joker {
-	key = "birthday",
-	pos = { x = 0, y = 1 },
-	atlas = "JokeboxJokers",
-	rarity = 2,
-	blueprint_compat = true,
-	discovered = true,
-	cost = 6,
-	config = { extra = { xmult = 2 }, },
-	loc_vars = function(self, info_queue, card)
-		return { vars = { card.ability.extra.xmult } }
-	end,
-	calculate = function(self, card, context)
-		if context.joker_main then
-			return {
-				xmult = card.ability.extra.xmult
-			}
-		end
-	end
-}
-
-SMODS.Joker {
 	key = "compare_number",
 	pos = { x = 4, y = 1 },
 	atlas = "JokeboxJokers",
@@ -193,6 +129,171 @@ SMODS.Joker {
 	end,
 }
 
+SMODS.Joker {
+	key = "blue_eyes",
+	pos = { x = 3, y = 0 },
+	atlas = "JokeboxJokers",
+	rarity = 1,
+	blueprint_compat = true,
+	discovered = true,
+	cost = 2,
+	config = { extra = { mult = 4 }, },
+	loc_vars = function(self, info_queue, card)
+		return { vars = { card.ability.extra.mult } }
+	end,
+	calculate = function(self, card, context)
+		if context.joker_main then
+			return {
+				mult = card.ability.extra.mult
+			}
+		end
+	end
+}
+
+SMODS.Joker {
+	key = "gd_colon",
+	pos = { x = 0, y = 3 },
+	atlas = "JokeboxBetter2X",
+	rarity = 1,
+	discovered = true,
+	blueprint_compat = true,
+	perishable_compat = false,
+	rental_compat = false,
+	eternal_compat = false,
+	cost = 4,
+	calculate = function(self, card, context)
+		if context.repetition and context.cardarea == G.play then
+			if context.other_card == G.play.cards[#G.play.cards] then
+				return {
+					repetitions = 1
+				}
+			end
+		end
+	end,
+}
+
+SMODS.Joker {
+	key = "winton",
+	pos = { x = 1, y = 3 },
+	atlas = "JokeboxBetter2X",
+	rarity = 1,
+	discovered = true,
+	blueprint_compat = true,
+	perishable_compat = false,
+	rental_compat = false,
+	eternal_compat = false,
+	cost = 4,
+	calculate = function(self, card, context)
+		if context.individual and context.cardarea == G.play then
+			for index, value in ipairs(G.play.cards) do
+				value.ability.perma_bonus = value.ability.perma_bonus or 0
+				value.ability.perma_bonus = value.ability.perma_bonus + 1
+				card_eval_status_text(value, 'extra', nil, nil, nil,
+					{ message = localize('k_upgrade_ex'), colour = G.C.CHIPS })
+			end
+		end
+	end,
+}
+
+SMODS.Joker {
+	key = "miku",
+	pos = { x = 2, y = 3 },
+	atlas = "JokeboxBetter2X",
+	rarity = 1,
+	discovered = true,
+	blueprint_compat = true,
+	perishable_compat = false,
+	rental_compat = false,
+	eternal_compat = false,
+	cost = 4,
+	calculate = function(self, card, context)
+		if context.joker_main then
+			for index, value in ipairs(G.play.cards) do
+				if value:get_id() == 3 then
+					if G.play.cards[index + 1] then
+						if G.play.cards[index + 1]:get_id() == 9 then
+							return {
+								mult = 39
+							}
+						end
+					end
+				end
+			end
+		end
+	end,
+}
+
+SMODS.Joker {
+	key = "reimu",
+	pos = { x = 3, y = 3 },
+	atlas = "JokeboxBetter2X",
+	rarity = 2,
+	discovered = true,
+	blueprint_compat = true,
+	perishable_compat = false,
+	rental_compat = false,
+	eternal_compat = false,
+	cost = 5,
+	calculate = function(self, card, context)
+		if context.before then
+			for index, value in ipairs(G.play.cards) do
+				if value.config.center.key == "m_wild" then
+					if math.random(1, 4) == 4 then
+						value:set_edition("e_polychrome")
+					else
+						value:set_ability(G.P_CENTERS.m_stone, nil, true)
+					end
+				end
+			end
+		end
+	end,
+}
+
+SMODS.Joker {
+	key = "nobara",
+	pos = { x = 4, y = 3 },
+	atlas = "JokeboxBetter2X",
+	rarity = 1,
+	discovered = true,
+	blueprint_compat = true,
+	perishable_compat = false,
+	rental_compat = false,
+	eternal_compat = false,
+	cost = 6,
+	calculate = function(self, card, context)
+		if context.end_of_round and context.main_eval and context.beat_boss then
+			for index, value in ipairs(G.jokers.cards) do
+				if math.random(1, 4) > 2 and not value.edition then
+					value:set_edition(poll_edition("BANG", nil, true, true,
+						{ "e_foil", "e_polychrome", "e_negative" }))
+				elseif not value.ability.eternal and not value.edition then
+					value:start_dissolve()
+				end
+			end
+		end
+	end,
+}
+
+SMODS.Joker {
+	key = "birthday",
+	pos = { x = 0, y = 1 },
+	atlas = "JokeboxJokers",
+	rarity = 2,
+	blueprint_compat = true,
+	discovered = true,
+	cost = 6,
+	config = { extra = { xmult = 2 }, },
+	loc_vars = function(self, info_queue, card)
+		return { vars = { card.ability.extra.xmult } }
+	end,
+	calculate = function(self, card, context)
+		if context.joker_main then
+			return {
+				xmult = card.ability.extra.xmult
+			}
+		end
+	end
+}
 
 SMODS.Joker {
 	key = "anvil_shaped",
@@ -365,6 +466,7 @@ SMODS.Joker {
 	end,
 }
 
+local my_pos = 1
 SMODS.Joker {
 	key = "demoknight",
 	pos = { x = 3, y = 0 },
@@ -416,23 +518,24 @@ SMODS.Joker {
 					return true
 				end
 			}))
-			local my_pos
 			for index, value in ipairs(G.jokers.cards) do
 				if value == card then
 					my_pos = index
 				end
 			end
+		end
+		if context.after and not context.blueprint then
 			if G.jokers.cards[my_pos + 1] then
 				G.E_MANAGER:add_event(Event({
-				blockable = true,
-				blocking = true,
-				func = function()
-					card:juice_up()
-					G.jokers.cards[my_pos + 1].pinned = true
-					card.pinned = true
-					return true
-				end
-			}))
+					blockable = true,
+					blocking = true,
+					func = function()
+						card:juice_up()
+						G.jokers.cards[my_pos + 1].pinned = true
+						card.pinned = true
+						return true
+					end
+				}))
 			else
 				SMODS.debuff_card(card, true, "demoknight-tf2")
 				for index, value in ipairs(G.jokers.cards) do
@@ -477,15 +580,15 @@ SMODS.Joker {
 	end,
 	calculate = function(self, card, context)
 		if context.setting_blind and not context.blueprint then
-			local my_pos = nil
+			local s_my_pos = nil
 			for i = 1, #G.jokers.cards do
 				if G.jokers.cards[i] == card then
-					my_pos = i
+					s_my_pos = i
 					break
 				end
 			end
-			if my_pos and G.jokers.cards[my_pos + 1] and not SMODS.is_eternal(G.jokers.cards[my_pos + 1], card) and not G.jokers.cards[my_pos + 1].getting_sliced then
-				local sliced_card = G.jokers.cards[my_pos + 1]
+			if s_my_pos and G.jokers.cards[s_my_pos + 1] and not SMODS.is_eternal(G.jokers.cards[s_my_pos + 1], card) and not G.jokers.cards[s_my_pos + 1].getting_sliced then
+				local sliced_card = G.jokers.cards[s_my_pos + 1]
 				if sliced_card.config.center.key ~= "j_insj_jibnor" then
 					sliced_card.getting_sliced = true
 					G.GAME.joker_buffer = G.GAME.joker_buffer - 1
@@ -560,6 +663,74 @@ SMODS.Joker {
 		end
 	end
 }
+
+SMODS.Joker {
+	key = "nanami",
+	pos = { x = 2, y = 1 },
+	atlas = "JokeboxBetter2X",
+	rarity = 2,
+	blueprint_compat = true,
+	discovered = true,
+	cost = 3,
+	config = { currentJoker = "j_green_joker", xmult = 1, xmult_gain = 0.7, dollars = 0, dollars_gain = 3 },
+	loc_vars = function(self, info_queue, card)
+		return { vars = { card.ability.currentJoker, card.ability.xmult, card.ability.xmult_gain, card.ability.dollars, card.ability.dollars_gain, } }
+	end,
+	set_ability = function(self, card, initial, delay_sprites)
+		card.ability.currentJoker = pseudorandom_element(G.P_JOKER_RARITY_POOLS[1], 'overtime').key
+	end,
+	calculate = function(self, card, context)
+		if context.end_of_round and context.main_eval and context.beat_boss then
+			card.ability.currentJoker = pseudorandom_element(G.P_JOKER_RARITY_POOLS[1], 'overtime').key
+		end
+		if context.setting_blind then
+			local tally = 0
+			for index, value in ipairs(G.jokers.cards) do
+				if value.config.center.key == card.ability.currentJoker then
+					value.getting_sliced = true
+					value:start_dissolve()
+					tally = tally + 1
+				end
+			end
+			if tally > 0 then
+				card.ability.xmult = card.ability.xmult + card.ability.xmult_gain * tally
+				card.ability.dollars = card.ability.dollars + card.ability.dollars_gain * tally
+				return {
+					message = localize('k_upgrade_ex'),
+					colour = G.C.GREEN,
+					card = card
+				}
+			end
+		end
+		if context.joker_main then
+			return {
+				xmult = card.ability.xmult,
+				dollars = card.ability.dollars
+			}
+		end
+	end,
+}
+
+local card_click_ref = Card.click
+function Card:click()
+	local ret = card_click_ref(self)
+	if self and self.config.center.key == "j_insj_winton" then
+		G.E_MANAGER:add_event(Event({
+			blockable = false,
+			blocking = true,
+			func = function()
+				if math.random(1, 100) == 100 then
+					play_sound("insj_winton-rare", 1, 1)
+				else
+					local temp = math.random(1, 7)
+					play_sound("insj_winton-" .. temp, 1, 1)
+				end
+				return true
+			end
+		}))
+	end
+	return ret
+end
 
 SMODS.Joker {
 	key = "marie",

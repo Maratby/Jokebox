@@ -90,16 +90,58 @@ return {
 				},
 			},
 			["j_insj_gd_colon"] = {
-				["name"] = "GD Colon Plush",
+				["name"] = "GD Colon",
 				["text"] = {
 					"{C:attention}Retrigger{} the {C:attention}last{} card in each played hand",
 					"{C:inactive,s:0.8}\"I love GD Cologne\"",
+				},
+			},
+			["j_insj_winton"] = {
+				["name"] = "Winton",
+				["text"] = {
+					"All played cards gain {C:blue}+1{} permanent {C:blue}Chip{} for each scored card",
+					"{C:inactive,s:0.8}\"hi there\"",
+				},
+			},
+			["j_insj_miku"] = {
+				["name"] = "Miku",
+				["text"] = {
+					"{C:attention}+39{} Mult if played hand contains",
+					"a scoring {C:attention}3{} followed by a scoring {C:attention}9{}",
+					"{C:inactive,s:0.8}\"thank you!\"",
+				},
+			},
+			["j_insj_reimu"] = {
+				["name"] = "Reimu",
+				["text"] = {
+					"{C:green}25%{} chance to add {C:dark_edition}Polychrome{} to each played {C:attention}Wild Card",
+					"otherwise, turn it into a {C:attention}Stone Card",
+					"{C:inactive,s:0.8}\"I love not thinking!\"",
+				},
+			},
+			["j_insj_nobara"] = {
+				["name"] = "Nobara",
+				["text"] = {
+					"{C:green}50%{} chance for each non-Edition Joker to gain a random {C:dark_edition}Edition",
+					"when {C:attention}Boss Blind is defeated",
+					"{C:red}destroy{} Jokers that fail this roll",
+					"{C:inactive,s:0.8}\"Let's play a game of chicken!\"",
 				},
 			},
 			["j_insj_birthday"] = {
 				["name"] = "Birthday Joker",
 				["text"] = {
 					"{X:mult,C:white}X#1#{} Mult if it is someone's {C:dark_edition}Birthday",
+				},
+			},
+			["j_insj_nanami"] = {
+				["name"] = "Work Is Shit!",
+				["text"] = {
+					"Selects a random {C:blue}Common Joker{} each {C:attention}Ante",
+					"Current Joker: {C:attention}#1#",
+					"{C:red}Destroy{} all copies of that Joker when {C:attention}Blind{} is selected",
+					"This joker gains {X:mult,C:white}X#3#{} Mult and {C:money}$#5#{} for each Joker destroyed this way",
+					"{C:inactive}(currently {X:mult,C:white}X#2#{C:inactive} Mult and {C:money}$#4#{})",
 				},
 			},
 			["j_insj_compare_number"] = {
