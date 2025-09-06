@@ -591,10 +591,9 @@ SMODS.Joker {
 					break
 				end
 			end
-			if s_my_pos and G.jokers.cards[s_my_pos + 1] and not SMODS.is_eternal(G.jokers.cards[s_my_pos + 1], card) and not G.jokers.cards[s_my_pos + 1].getting_sliced then
+			if s_my_pos and G.jokers.cards[s_my_pos + 1] and not G.jokers.cards[s_my_pos + 1].getting_sliced then
 				local sliced_card = G.jokers.cards[s_my_pos + 1]
 				if sliced_card.config.center.key ~= "j_insj_jibnor" then
-					sliced_card.getting_sliced = true
 					G.GAME.joker_buffer = G.GAME.joker_buffer - 1
 					G.E_MANAGER:add_event(Event({
 						func = function()
@@ -603,7 +602,6 @@ SMODS.Joker {
 							card:juice_up(1.5, 2)
 							---replace sliced_card with Jibnor
 							Jokebox.change_card(sliced_card, "j_insj_jibnor")
-							sliced_card:start_dissolve({ HEX("57ecab") }, nil, 1.6)
 							play_sound('insj_pan', 1, 1)
 							return true
 						end
@@ -633,15 +631,16 @@ SMODS.Joker {
 		return { vars = { card.ability.extra.mult } }
 	end,
 	calculate = function(self, card, context)
-		if card.sell_cost >= 0 then
-			card.sell_cost = card.sell_cost * -1
-		end
+		card.sell_cost = -2
 		if context.joker_main then
 			return {
 				mult = card.ability.extra.mult
 			}
 		end
-	end
+	end,
+	update = function(self, card)
+		card.sell_cost = -2
+	end,
 }
 
 SMODS.Joker {
