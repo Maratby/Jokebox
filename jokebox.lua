@@ -8,7 +8,7 @@ Jokebox_Config = Jokebox_Mod.config
 
 ---it's a surprise tool that will help us later
 SMODS.current_mod.optional_features = function()
-    return { retrigger_joker = true }
+	return { retrigger_joker = true }
 end
 
 SMODS.Atlas {
@@ -36,14 +36,14 @@ SMODS.Atlas {
 
 ---check if card in collection (thanks minty and or pokermon)
 Jokebox.in_collection = function(card)
-    if G.your_collection then
-        for k, v in pairs(G.your_collection) do
-            if card.area == v then
-                return true
-            end
-        end
-    end
-    return false
+	if G.your_collection then
+		for k, v in pairs(G.your_collection) do
+			if card.area == v then
+				return true
+			end
+		end
+	end
+	return false
 end
 
 ---get percentage from two values
@@ -65,22 +65,22 @@ end
 
 ---jevil moving thanks N Joyousspring
 SMODS.DrawStep {
-    key = 'insj_jevil_chaos',
-    order = 100,
-    func = function(card)
-        if card.config.center.key == "j_insj_jevil" then
-            if not G.insj_jevil_soul then
-                G.insj_jevil_soul = Sprite(0, 0, G.CARD_W, G.CARD_H,
-                    G.ASSET_ATLAS["insj_JokeboxJevil"], { x = 0, y = 0 })
-            end
+	key = 'insj_jevil_chaos',
+	order = 100,
+	func = function(card)
+		if card.config.center.key == "j_insj_jevil" then
+			if not G.insj_jevil_soul then
+				G.insj_jevil_soul = Sprite(0, 0, G.CARD_W, G.CARD_H,
+					G.ASSET_ATLAS["insj_JokeboxJevil"], { x = 0, y = 0 })
+			end
 
-            G.insj_jevil_soul:set_sprite_pos({ x = math.floor(G.TIMERS.REAL * 10) % 8, y = 1 })
+			G.insj_jevil_soul:set_sprite_pos({ x = math.floor(G.TIMERS.REAL * 10) % 8, y = 1 })
 
-            G.insj_jevil_soul.role.draw_major = card
-            G.insj_jevil_soul:draw_shader('dissolve', nil, nil, nil, card.children.center, 1, 0, 0, 0)
-        end
-    end,
-    conditions = { vortex = false, facing = 'front' },
+			G.insj_jevil_soul.role.draw_major = card
+			G.insj_jevil_soul:draw_shader('dissolve', nil, nil, nil, card.children.center, 1, 0, 0, 0)
+		end
+	end,
+	conditions = { vortex = false, facing = 'front' },
 }
 
 ---enter an edition in _edition to set edition, enter true or false in eternal to set eternal
@@ -115,9 +115,9 @@ end
 
 ---removing stuff from tables by key
 function table.insjremovekey(table, key)
-    local element = table[key]
-    table[key] = nil
-    return element
+	local element = table[key]
+	table[key] = nil
+	return element
 end
 
 ---split string at symbol (thanks Meta, Rock Muncher)
@@ -145,6 +145,17 @@ SMODS.Rarity {
 		return weight
 	end,
 }
+
+---Special rarity
+SMODS.Rarity {
+	key = "insj_special",
+	default_weight = 0,
+	badge_colour = G.C.DARK_EDITION,
+	pools = { ["Joker"] = false },
+	get_weight = function(self, weight, object_type)
+		return weight
+	end,
+}
 ---hook for playing more than 6 cards at a time
 local canplayref = G.FUNCS.can_play
 G.FUNCS.can_play = function(e)
@@ -159,14 +170,14 @@ end
 
 ---hook for undebuffing Demoknight at end of round
 local end_round_ref = end_round
-    function end_round()
-        for index, value in ipairs(G.jokers.cards) do
-			if value.config.center.key == "j_insj_demoknight" then
-				SMODS.debuff_card(value, false, "demoknight-tf2")
-			end
+function end_round()
+	for index, value in ipairs(G.jokers.cards) do
+		if value.config.center.key == "j_insj_demoknight" then
+			SMODS.debuff_card(value, false, "demoknight-tf2")
 		end
-        end_round_ref()
-    end
+	end
+	end_round_ref()
+end
 
 ---function for spawning vouchers
 function compend_redeem_voucher(local_voucher, _delay)
@@ -187,27 +198,42 @@ function compend_redeem_voucher(local_voucher, _delay)
 end
 
 ---function for swapping a joker out for a new one
-function Jokebox.change_card(card_object, new_card_key)
-	local new_card_object = SMODS.create_card({
-		area = G.jokers,
-		key = new_card_key
-	})
-
-	if card_object.edition then
-		new_card_object:set_edition(card_object.edition)
+function Jokebox.change_card(card_object, new_card_key, transfer_ability, extra)
+	local old_ability = 0
+	if transfer_ability then
+		if extra then
+			old_ability = card_object.ability.extra[transfer_ability]
+		else
+			old_ability = card_object.ability[transfer_ability]
+		end
 	end
-	if card_object.ability.eternal == true then
-		new_card_object.ability.eternal = true
-	elseif card_object.ability.perishable == true then
-		new_card_object.ability.perishable = true
-	elseif card_object.ability.rental == true then
-		new_card_object.ability.rental = true
+	card_object:set_ability(G.P_CENTERS[new_card_key])
+	if transfer_ability then
+		if extra then
+			card_object.ability.extra[transfer_ability] = old_ability
+		else
+			card_object.ability[transfer_ability] = old_ability
+		end
 	end
-	new_card_object:add_to_deck()
-	G.jokers:emplace(new_card_object)
-	return new_card_object
+	card_object:juice_up()
 end
 
+---function for removing all stickers (thanks minty)
+Jokebox.Stickerclear = function(target)
+	local stickers = SMODS.stickers
+	target.ability.rental = false
+	target.ability.perishable = false
+	target.ability.eternal = false
+	target.pinned = false
+	if stickers ~= nil then
+		for k, v in pairs(SMODS.stickers) do
+			if target.ability[k] then
+				if v.removed then v:removed(target) end --Patch for Gemstones; I don't think this is universal
+				target:remove_sticker(k)
+			end
+		end
+	end
+end
 ---jevil noises
 SMODS.Sound({
 	key = "jevil_music",
@@ -309,6 +335,30 @@ SMODS.Sound({
 SMODS.Sound({
 	key = "winton-rare",
 	path = "winton\\winton-rare.mp3",
+	pitch = 1,
+})
+
+SMODS.Sound({
+	key = "winton-sell-1",
+	path = "winton\\winton-sell-1.ogg",
+	pitch = 1,
+})
+
+SMODS.Sound({
+	key = "winton-sell-2",
+	path = "winton\\winton-sell-2.ogg",
+	pitch = 1,
+})
+
+SMODS.Sound({
+	key = "winton-sell-3",
+	path = "winton\\winton-sell-3.ogg",
+	pitch = 1,
+})
+
+SMODS.Sound({
+	key = "armed_dangerous",
+	path = "again.mp3",
 	pitch = 1,
 })
 ---Config UI

@@ -192,6 +192,10 @@ SMODS.Joker {
 					{ message = localize('k_upgrade_ex'), colour = G.C.CHIPS })
 			end
 		end
+		if context.selling_self then
+			local temp = math.random(1, 3)
+			play_sound("insj_winton-sell-" .. temp, 1, 1)
+		end
 	end,
 }
 
@@ -660,6 +664,215 @@ SMODS.Joker {
 		end
 		if context.before and (next(context.poker_hands['Straight Flush'])) then
 			ease_dollars(to_big((to_number(G.GAME.dollars) * 0.25)))
+		end
+	end
+}
+
+SMODS.Joker {
+	key = "to_be_hog",
+	pos = { x = 1, y = 2 },
+	atlas = "JokeboxBetter2X",
+	rarity = 1,
+	blueprint_compat = true,
+	discovered = true,
+	cost = 6,
+	config = { charge = 0 },
+	loc_vars = function(self, info_queue, card)
+		info_queue[#info_queue + 1] = { key = "j_insj_fake_hog", set = "Other" }
+		return { vars = { card.ability.charge } }
+	end,
+	calculate = function(self, card, context)
+		if context.end_of_round and context.main_eval then
+			card.ability.charge = card.ability.charge + 1
+		end
+		if context.after then
+			if G.jokers.cards[#G.jokers.cards] == card then
+				Jokebox.change_card(card, "j_insj_hog", "charge")
+			end
+		end
+	end
+}
+
+SMODS.Joker {
+	key = "hog",
+	pos = { x = 2, y = 2 },
+	atlas = "JokeboxBetter2X",
+	rarity = "insj_special",
+	blueprint_compat = true,
+	no_collection = true,
+	discovered = true,
+	cost = 6,
+	config = { charge = 0 },
+	loc_vars = function(self, info_queue, card)
+		info_queue[#info_queue + 1] = { key = "j_insj_fake_to_be_hog", set = "Other" }
+		return { vars = { card.ability.charge } }
+	end,
+	calculate = function(self, card, context)
+		if context.end_of_round and context.main_eval then
+			card.ability.charge = card.ability.charge + 1
+		end
+		if context.joker_main then
+			return {
+				x_mult = math.max(1, card.ability.charge)
+			}
+		end
+		if context.after then
+			if card.ability.charge <= 1 then
+				Jokebox.change_card(card, "j_insj_to_be_hog", "charge")
+			else
+				card.ability.charge = card.ability.charge - 1
+			end
+		end
+	end
+}
+
+SMODS.Joker {
+	key = "armed_dangerous",
+	pos = { x = 3, y = 2 },
+	atlas = "JokeboxBetter2X",
+	rarity = 3,
+	blueprint_compat = true,
+	discovered = true,
+	cost = 11,
+	config = { maxRetrig = 5, odds = 5 },
+	loc_vars = function(self, info_queue, card)
+		local numerator, denominator = SMODS.get_probability_vars(card, 1, card.ability.odds, 'ARMED AND DANGEROUS!!')
+		return { vars = { numerator, denominator, card.ability.maxRetrig } }
+	end,
+	calculate = function(self, card, context)
+		if context.repetition and context.cardarea == G.play then
+			local isDone = false
+			local repeats = 0
+			while isDone == false and repeats <= card.ability.maxRetrig do
+				if SMODS.pseudorandom_probability(card, 'AGAIN!!!', 1, card.ability.odds) then
+					repeats = repeats + 1
+					G.E_MANAGER:add_event(Event({
+						blocking = true,
+						func = function()
+							play_sound("insj_armed_dangerous", 1, 1)
+							card:juice_up(0.8, 0.8)
+							return true
+						end
+					}))
+				else
+					isDone = true
+				end
+			end
+
+			return {
+				repetitions = repeats,
+				card = card
+			}
+		end
+	end
+}
+
+SMODS.Joker {
+	key = "gentrification",
+	pos = { x = 1, y = 1 },
+	atlas = "JokeboxBetter2X",
+	rarity = 3,
+	blueprint_compat = true,
+	discovered = true,
+	cost = 22,
+}
+
+SMODS.Joker {
+	key = "load_goku",
+	pos = { x = 4, y = 1 },
+	atlas = "JokeboxBetter2X",
+	rarity = 3,
+	blueprint_compat = true,
+	discovered = true,
+	cost = 10,
+	add_to_deck = function(self, card, from_debuff)
+		if not from_debuff then
+			G.E_MANAGER:add_event(Event({
+				func = (function()
+					G.E_MANAGER:add_event(Event({
+						func = function()
+							SMODS.add_card({ key = 'c_soul', key_append = 'hey_its_me_goku' })
+							G.GAME.consumeable_buffer = 0
+							return true
+						end
+					}))
+					card_eval_status_text(card, 'extra', nil, nil, nil,
+						{ message = localize('k_plus_spectral'), colour = G.C.SECONDARY_SET.Spectral })
+					return true
+				end)
+			}))
+		end
+		Jokebox.Stickerclear(card)
+		card.edition = nil
+	end,
+	remove_from_deck = function(self, card, from_debuff)
+		if not from_debuff then
+			G.E_MANAGER:add_event(Event({
+				blockable = true,
+				blocking = true,
+				func = function()
+					G.STATE = G.STATES.GAME_OVER
+					if not G.GAME.won and not G.GAME.seeded and not G.GAME.challenge then
+						G.PROFILES[G.SETTINGS.profile].high_scores.current_streak.amt = 0
+					end
+					G:save_settings()
+					G.FILE_HANDLER.force = true
+					G.STATE_COMPLETE = false
+					return true
+				end
+			}))
+		end
+	end,
+	calculate = function(self, card, context)
+		Jokebox.Stickerclear(card)
+		card.edition = nil
+	end,
+}
+
+local card_get_id_ref = Card.get_id
+function Card:get_id()
+	local ret = card_get_id_ref(self)
+	if next(SMODS.find_card("j_insj_gentrification")) then
+		return 4
+	end
+	return ret
+end
+
+SMODS.Joker {
+	key = "surgeon",
+	pos = { x = 3, y = 1 },
+	atlas = "JokeboxBetter2X",
+	rarity = 3,
+	blueprint_compat = true,
+	discovered = true,
+	cost = 8,
+	config = { extra = { triggers = 5.5 }, },
+	loc_vars = function(self, info_queue, card)
+		return { vars = { card.ability.extra.triggers } }
+	end,
+	calculate = function(self, card, context)
+		if context.before then
+			local my_pos
+			for index, value in ipairs(G.jokers.cards) do
+				if value == card then
+					my_pos = index
+				end
+			end
+			if G.play.cards[my_pos] then
+				G.play.cards[my_pos].surgeon = true
+			end
+		end
+		if context.repetition and context.cardarea == G.play then
+			if context.other_card.surgeon then
+				return {
+					repetitions = card.ability.extra.triggers
+				}
+			end
+		end
+		if context.after then
+			for index, value in ipairs(G.play.cards) do
+				value.surgeon = nil
+			end
 		end
 	end
 }

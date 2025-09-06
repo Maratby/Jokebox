@@ -2,6 +2,7 @@ return {
 	["misc"] = {
 		["dictionary"] = {
 			["k_insj_dented"] = "Dented",
+			["k_insj_special"] = "Special",
 		},
 	},
 	["descriptions"] = {
@@ -21,6 +22,26 @@ return {
                     "of Spades gives",
                     "{X:mult,C:white} X2 {} Mult when scored",
                     "{s:0.8}Card changes every round",
+				},
+			},
+			["j_insj_fake_to_be_hog"] = {
+				["name"] = "To Be Crankin' Hog",
+				["text"] = {
+					"Gains {C:attention}+1{} Charge after each defeated Blind",
+					"{C:dark_edition,E:1}transforms{} into {C:attention}Crankin' Hog{} if placed in",
+					"rightmost Joker Slot when a hand is played",
+					"{C:inactive}(currently X Charge)",
+				},
+			},
+
+			["j_insj_fake_hog"] = {
+				["name"] = "Crankin' Hog",
+				["text"] = {
+					"Loses {C:attention}1{} Charge after each Hand",
+					"{C:dark_edition,E:1}transforms{} into {C:attention}To Be Crankin' Hog{} when reaching",
+					"{C:attention}1{} remaining Charge",
+					"Grants {X:mult,C:white}Xmult{} equal to number of remaining Charges",
+					"{C:inactive}(currently X Charge)",
 				},
 			},
 		},
@@ -134,6 +155,62 @@ return {
 					"{X:mult,C:white}X#1#{} Mult if it is someone's {C:dark_edition}Birthday",
 				},
 			},
+
+			["j_insj_gentrification"] = {
+				["name"] = "Gentrification",
+				["text"] = {
+					"All cards are {C:attention}4s{}",
+					"{C:inactive,s:0.6}\"Shoot - Should've thought of that; I was JUST in San Francisco!\"",
+				},
+			},
+
+			["j_insj_surgeon"] = {
+				["name"] = "I  Am  A Surgeon",
+				["text"] = {
+					"{C:attention}Retrigger{} the {C:attention}Nth{} card in each hand {C:attention}#1#{} times",
+					"where {C:attention}N{} is this Joker's {C:attention}Index{} in your Joker Slots",
+				},
+			},
+
+			["j_insj_to_be_hog"] = {
+				["name"] = "To Be Crankin' Hog",
+				["text"] = {
+					"Gains {C:attention}+1{} Charge after each defeated Blind",
+					"{C:dark_edition,E:1}transforms{} into {C:attention}Crankin' Hog{} if placed in",
+					"rightmost Joker Slot when a hand is played",
+					"{C:inactive}(currently #1# Charge)",
+				},
+			},
+
+			["j_insj_hog"] = {
+				["name"] = "Crankin' Hog",
+				["text"] = {
+					"Loses {C:attention}1{} Charge after each Hand",
+					"{C:dark_edition,E:1}transforms{} into {C:attention}To Be Crankin' Hog{} when reaching",
+					"{C:attention}1{} remaining Charge",
+					"Grants {X:mult,C:white}Xmult{} equal to number of remaining Charges",
+					"{C:inactive}(currently #1# Charge)",
+				},
+			},
+
+			["j_insj_load_goku"] = {
+				["name"] = "Load-Bearing Goku",
+				["text"] = {
+					"Creates {C:dark_edition}The Soul{} when obtained {C:inactive}(don't need room)",
+					"{C:red}lose the run{} if this Joker is {C:money}Sold{} or {C:red}Destroyed",
+					"{C:inactive}(Cannot have Editions or Stickers)",
+				},
+			},
+
+			["j_insj_armed_dangerous"] = {
+				["name"] = "ARMED AND DANGEROUS!",
+				["text"] = {
+					"{C:green}#1# in #2#{} chance to {C:attention}Retrigger{} each scored card",
+					"{C:red}Pisses you The Fuck Off{} because your team keeps {C:attention}feeding{} him",
+					"{C:inactive}(max #3# retriggers per card)",
+				},
+			},
+
 			["j_insj_nanami"] = {
 				["name"] = "Work Is Shit!",
 				["text"] = {
