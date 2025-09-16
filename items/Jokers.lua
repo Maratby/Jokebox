@@ -194,7 +194,7 @@ SMODS.Joker {
 		end
 		if context.selling_self then
 			local temp = math.random(1, 3)
-			play_sound("insj_winton-sell-" .. temp, 1, 1)
+			play_sound("jkbx_winton-sell-" .. temp, 1, 1)
 		end
 	end,
 }
@@ -212,7 +212,7 @@ SMODS.Joker {
 	cost = 4,
 	calculate = function(self, card, context)
 		if context.joker_main then
-			for index, value in ipairs(G.play.cards) do
+			for index, value in ipairs(context.scoring_hand) do
 				if value:get_id() == 3 then
 					if G.play.cards[index + 1] then
 						if G.play.cards[index + 1]:get_id() == 9 then
@@ -274,6 +274,40 @@ SMODS.Joker {
 					value:start_dissolve()
 				end
 			end
+		end
+	end,
+}
+
+local middle = 0
+SMODS.Joker {
+	key = "miwa",
+	pos = { x = 0, y = 4 },
+	atlas = "JokeboxBetter2X",
+	rarity = 1,
+	discovered = true,
+	blueprint_compat = true,
+	perishable_compat = false,
+	rental_compat = false,
+	eternal_compat = false,
+	cost = 4,
+	config = { chips = 90 },
+	loc_vars = function(self, info_queue, card)
+		return { vars = { card.ability.chips } }
+	end,
+	calculate = function(self, card, context)
+		if context.before and #G.play.cards % 2 ~= 0 then
+			middle = math.floor((#G.play.cards / 2) + 0.5)
+		end
+		if context.individual and context.cardarea == G.play then
+			if context.other_card == G.play.cards[middle] then
+				return {
+					chips = card.ability.chips,
+					card = card
+				}
+			end
+		end
+		if context.after then
+			middle = 0
 		end
 	end,
 }
@@ -361,11 +395,11 @@ SMODS.Joker {
 				if scored_card:get_id() == 12 then
 					if queensuit1 == "no" then
 						queensuit1 = scored_card.base.suit
-						scored_card.insj_gotten = true
+						scored_card.jkbx_gotten = true
 					else
 						if scored_card.base.suit ~= queensuit1 then
 							winflag = true
-							scored_card.insj_gotten = true
+							scored_card.jkbx_gotten = true
 							break
 						end
 					end
@@ -373,10 +407,14 @@ SMODS.Joker {
 			end
 			if winflag == true then
 				add_tag(Tag('tag_rare'))
+			else
+				for index, value in ipairs(G.play.cards) do
+					value.jkbx_gotten = false
+				end
 			end
 		end
 		if context.destroying_card then
-			if context.destroying_card.insj_gotten == true then
+			if context.destroying_card.jkbx_gotten == true then
 				return { remove = true }
 			end
 		end
@@ -396,7 +434,7 @@ SMODS.Joker {
 	calculate = function(self, card, context)
 		if context.before and (next(context.poker_hands['Two Pair']) or next(context.poker_hands['Full House'])) then
 			card:juice_up()
-			play_sound("insj_two-pair", 1, 2)
+			play_sound("jkbx_two-pair", 1, 2)
 		end
 		if context.after and (next(context.poker_hands['Two Pair']) or next(context.poker_hands['Full House'])) then
 			G.E_MANAGER:add_event(Event({
@@ -404,7 +442,7 @@ SMODS.Joker {
 				blocking = true,
 				func = function()
 					card:juice_up()
-					play_sound("insj_Exodia", 1, 2)
+					play_sound("jkbx_Exodia", 1, 2)
 					return true
 				end
 			}))
@@ -444,8 +482,8 @@ SMODS.Joker {
 	config = { tally = 0, tallymax = 5 },
 	loc_vars = function(self, info_queue, card)
 		if Jokebox_Config.Eekum_Toggle == true then
-			info_queue[#info_queue + 1] = { key = "j_insj_fake_idol", set = "Other" }
-			info_queue[#info_queue + 1] = { key = "j_insj_fake_trading", set = "Other" }
+			info_queue[#info_queue + 1] = { key = "j_jkbx_fake_idol", set = "Other" }
+			info_queue[#info_queue + 1] = { key = "j_jkbx_fake_trading", set = "Other" }
 		end
 		return { vars = { card.ability.tally, card.ability.tallymax } }
 	end,
@@ -463,7 +501,7 @@ SMODS.Joker {
 			}
 		end
 		if context.selling_self and card.ability.tally >= card.ability.tallymax and not context.blueprint then
-			play_sound("insj_eekum_bokum", 1, 1)
+			play_sound("jkbx_eekum_bokum", 1, 1)
 			Jokebox_Cardmaker(false, false, "j_idol")
 			Jokebox_Cardmaker("e_negative", false, "j_trading")
 		end
@@ -518,7 +556,7 @@ SMODS.Joker {
 				func = function()
 					card:juice_up()
 					local temp = math.random(1, 3)
-					play_sound("insj_demoknight-" .. temp, 1, 1)
+					play_sound("jkbx_demoknight-" .. temp, 1, 1)
 					return true
 				end
 			}))
@@ -579,7 +617,7 @@ SMODS.Joker {
 	cost = 6,
 	config = { extra = { xmult = 1, xmult_gain = 0.75 }, },
 	loc_vars = function(self, info_queue, card)
-		info_queue[#info_queue + 1] = G.P_CENTERS.j_insj_jibnor
+		info_queue[#info_queue + 1] = G.P_CENTERS.j_jkbx_jibnor
 		return { vars = { card.ability.extra.xmult_gain, card.ability.extra.xmult } }
 	end,
 	calculate = function(self, card, context)
@@ -593,7 +631,7 @@ SMODS.Joker {
 			end
 			if s_my_pos and G.jokers.cards[s_my_pos + 1] and not G.jokers.cards[s_my_pos + 1].getting_sliced then
 				local sliced_card = G.jokers.cards[s_my_pos + 1]
-				if sliced_card.config.center.key ~= "j_insj_jibnor" then
+				if sliced_card.config.center.key ~= "j_jkbx_jibnor" then
 					G.GAME.joker_buffer = G.GAME.joker_buffer - 1
 					G.E_MANAGER:add_event(Event({
 						func = function()
@@ -601,8 +639,8 @@ SMODS.Joker {
 							card.ability.extra.xmult = card.ability.extra.xmult + card.ability.extra.xmult_gain
 							card:juice_up(1.5, 2)
 							---replace sliced_card with Jibnor
-							Jokebox.change_card(sliced_card, "j_insj_jibnor")
-							play_sound('insj_pan', 1, 1)
+							Jokebox.change_card(sliced_card, "j_jkbx_jibnor")
+							play_sound('jkbx_pan', 1, 1)
 							return true
 						end
 					}))
@@ -621,7 +659,7 @@ SMODS.Joker {
 	key = "jibnor",
 	pos = { x = 2, y = 1 },
 	atlas = "JokeboxJokers",
-	rarity = "insj_dented",
+	rarity = "jkbx_dented",
 	blueprint_compat = true,
 	no_collection = true,
 	discovered = true,
@@ -677,7 +715,7 @@ SMODS.Joker {
 	cost = 6,
 	config = { charge = 0 },
 	loc_vars = function(self, info_queue, card)
-		info_queue[#info_queue + 1] = { key = "j_insj_fake_hog", set = "Other" }
+		info_queue[#info_queue + 1] = { key = "j_jkbx_fake_hog", set = "Other" }
 		return { vars = { card.ability.charge } }
 	end,
 	calculate = function(self, card, context)
@@ -686,7 +724,7 @@ SMODS.Joker {
 		end
 		if context.after then
 			if G.jokers.cards[#G.jokers.cards] == card then
-				Jokebox.change_card(card, "j_insj_hog", "charge")
+				Jokebox.change_card(card, "j_jkbx_hog", "charge")
 			end
 		end
 	end
@@ -696,14 +734,14 @@ SMODS.Joker {
 	key = "hog",
 	pos = { x = 2, y = 2 },
 	atlas = "JokeboxBetter2X",
-	rarity = "insj_special",
+	rarity = "jkbx_special",
 	blueprint_compat = true,
 	no_collection = true,
 	discovered = true,
 	cost = 6,
 	config = { charge = 0 },
 	loc_vars = function(self, info_queue, card)
-		info_queue[#info_queue + 1] = { key = "j_insj_fake_to_be_hog", set = "Other" }
+		info_queue[#info_queue + 1] = { key = "j_jkbx_fake_to_be_hog", set = "Other" }
 		return { vars = { card.ability.charge } }
 	end,
 	calculate = function(self, card, context)
@@ -717,7 +755,7 @@ SMODS.Joker {
 		end
 		if context.after then
 			if card.ability.charge <= 1 then
-				Jokebox.change_card(card, "j_insj_to_be_hog", "charge")
+				Jokebox.change_card(card, "j_jkbx_to_be_hog", "charge")
 			else
 				card.ability.charge = card.ability.charge - 1
 			end
@@ -748,7 +786,7 @@ SMODS.Joker {
 					G.E_MANAGER:add_event(Event({
 						blocking = true,
 						func = function()
-							play_sound("insj_armed_dangerous", 1, 1)
+							play_sound("jkbx_armed_dangerous", 1, 1)
 							card:juice_up(0.8, 0.8)
 							return true
 						end
@@ -831,7 +869,7 @@ SMODS.Joker {
 local card_get_id_ref = Card.get_id
 function Card:get_id()
 	local ret = card_get_id_ref(self)
-	if next(SMODS.find_card("j_insj_gentrification")) then
+	if next(SMODS.find_card("j_jkbx_gentrification")) then
 		return 4
 	end
 	return ret
@@ -872,6 +910,56 @@ SMODS.Joker {
 			for index, value in ipairs(G.play.cards) do
 				value.surgeon = nil
 			end
+		end
+	end
+}
+
+SMODS.Joker {
+	key = "merge_nolook",
+	pos = { x = 4, y = 2 },
+	atlas = "JokeboxBetter2X",
+	rarity = 3,
+	blueprint_compat = true,
+	discovered = true,
+	cost = 9,
+	config = { extra = { xmult = 1 }, },
+	loc_vars = function(self, info_queue, card)
+		return { vars = { card.ability.extra.xmult } }
+	end,
+	calculate = function(self, card, context)
+		if context.setting_blind and not context.blueprint then
+			local my_pos = nil
+			for i = 1, #G.jokers.cards do
+				if G.jokers.cards[i] == card then
+					my_pos = i
+					break
+				end
+			end
+			if my_pos and G.jokers.cards[my_pos + 1] and not SMODS.is_eternal(G.jokers.cards[my_pos + 1], card) and not G.jokers.cards[my_pos + 1].getting_sliced then
+				local sliced_card = G.jokers.cards[my_pos + 1]
+				sliced_card.getting_sliced = true
+				G.GAME.joker_buffer = G.GAME.joker_buffer - 1
+				G.E_MANAGER:add_event(Event({
+					func = function()
+						G.GAME.joker_buffer = 0
+						card.ability.extra.xmult = card.ability.extra.xmult + sliced_card.sell_cost / 10
+						card:juice_up(0.8, 0.8)
+						sliced_card:start_dissolve({ HEX("57ecab") }, nil, 1.6)
+						play_sound('jkbx_kaboom_JKBX', 1, 1)
+						return true
+					end
+				}))
+				return {
+					message = localize('k_upgrade_ex'),
+					colour = G.C.MULT,
+					card = card
+				}
+			end
+		end
+		if context.joker_main and card.ability.extra.xmult > 1 then
+			return {
+				xmult = card.ability.extra.xmult
+			}
 		end
 	end
 }
@@ -923,19 +1011,92 @@ SMODS.Joker {
 	end,
 }
 
+SMODS.Joker {
+	key = "lapse_blue",
+	pos = { x = 5, y = 2 },
+	atlas = "JokeboxBetter2X",
+	rarity = 2,
+	blueprint_compat = true,
+	discovered = true,
+	cost = 7,
+	config = { xchips = 1 },
+	loc_vars = function(self, info_queue, card)
+		return { vars = { card.ability.xchips, } }
+	end,
+	calculate = function(self, card, context)
+		if context.after then
+			for index, value in ipairs(context.scoring_hand) do
+				card.ability.xchips = card.ability.xchips + math.floor(value.base.nominal + 0.5) * 0.025
+				if value.ability.perma_bonuss then
+					card.ability.xchips = card.ability.xchips + math.floor(value.ability.perma_bonus + 0.5) * 0.025
+				end
+				if value.config.center == G.P_CENTERS.m_bonus or value.config.center == G.P_CENTERS.m_stone then
+					value:set_ability('c_base', nil, true)
+				end
+				value.base.nominal = 0
+				value.ability.perma_bonus = 0
+				G.E_MANAGER:add_event(Event({
+					blockable = false,
+					blocking = true,
+					func = function()
+						card:juice_up()
+						return true
+					end
+				}))
+			end
+		end
+		if context.joker_main and card.ability.xchips > 1 then
+			return {
+				xchips = card.ability.xchips
+			}
+		end
+	end,
+}
+
+SMODS.Joker {
+	key = "reversal_red",
+	pos = { x = 5, y = 1 },
+	atlas = "JokeboxBetter2X",
+	rarity = 2,
+	blueprint_compat = true,
+	discovered = true,
+	cost = 7,
+	config = { xchips = 1 },
+	loc_vars = function(self, info_queue, card)
+		return { vars = { card.ability.xchips, } }
+	end,
+	calculate = function(self, card, context)
+		if context.after then
+			for index, value in ipairs(context.scoring_hand) do
+				if value:get_id() == 5 then
+					if G.play.cards[index + 1] then
+						if G.play.cards[index + 1]:get_id() == 12 then
+							for index, value in ipairs(G.discard.cards) do
+								value.ability.perma_x_mult = value.ability.perma_x_mult or 1
+								value.ability.perma_x_mult = value.ability.perma_x_mult + 0.25
+							end
+							G.FUNCS.draw_from_discard_to_deck()
+						end
+					end
+				end
+			end
+		end
+	end,
+}
+
 local card_click_ref = Card.click
 function Card:click()
 	local ret = card_click_ref(self)
-	if self and self.config.center.key == "j_insj_winton" then
+	if self and self.config.center.key == "j_jkbx_winton" then
 		G.E_MANAGER:add_event(Event({
 			blockable = false,
 			blocking = true,
 			func = function()
 				if math.random(1, 100) == 100 then
-					play_sound("insj_winton-rare", 1, 1)
+					play_sound("jkbx_winton-rare", 1, 1)
 				else
 					local temp = math.random(1, 7)
-					play_sound("insj_winton-" .. temp, 1, 1)
+					play_sound("jkbx_winton-" .. temp, 1, 1)
 				end
 				return true
 			end
@@ -943,6 +1104,93 @@ function Card:click()
 	end
 	return ret
 end
+
+local cardSetCostHook = Card.set_cost
+function Card:set_cost()
+    local ret = cardSetCostHook(self)
+		if next(SMODS.find_card("j_jkbx_word_on_the_street")) then
+			self.cost = 5
+			self.sell_cost = 5
+		end
+    return ret
+end
+
+SMODS.Joker {
+	key = "megatron",
+	pos = { x = 5, y = 0 },
+	atlas = "JokeboxBetter2X",
+	rarity = 3,
+	immutable = true,
+	blueprint_compat = true,
+	discovered = true,
+	cost = 8,
+	config = { m_triggers = 0, room1 = "Inactive", room2 = "Inactive", room3 = "Inactive", xmult = 1 },
+	loc_vars = function(self, info_queue, card)
+		info_queue[#info_queue + 1] = G.P_CENTERS.m_steel
+		return {
+			vars = {
+				card.ability.room1,
+				card.ability.room2,
+				card.ability.room3,
+				card.ability.xmult,
+				colours = {
+					card.ability.room1 == "Active" and G.C.GREEN or G.C.RED,
+					card.ability.room2 == "Active" and G.C.GREEN or G.C.RED,
+					card.ability.room3 == "Active" and G.C.GREEN or G.C.RED,
+				},
+			}
+		}
+	end,
+	calculate = function(self, card, context)
+		if card.ability.m_triggers >= 1 then
+			card.ability.room1 = "Active"
+
+			if context.money_altered and context.amount < 0 then
+				local tempmoney = math.floor(context.amount + 0.5)
+				card.ability.xmult = card.ability.xmult + (tempmoney * -0.05)
+			end
+		end
+		if card.ability.m_triggers >= 2 then
+			card.ability.room2 = "Active"
+			if context.remove_playing_cards then
+				for index, value in ipairs(context.removed) do
+					if value.config.center == G.P_CENTERS.m_steel then
+						ease_dollars(2)
+					end
+				end
+			end
+		end
+		if card.ability.m_triggers >= 3 then
+			card.ability.room3 = "Active"
+
+			if context.end_of_round and context.main_eval and context.beat_boss then
+				if card == G.jokers.cards[1] then
+					add_tag(Tag('tag_rare'))
+				elseif card == G.jokers.cards[#G.jokers.cards] then
+					add_tag(Tag('tag_voucher'))
+				end
+			end
+		end
+
+		if context.joker_main and card.ability.xmult > 1 then
+			return {
+				xmult = card.ability.xmult
+			}
+		end
+
+		if context.remove_playing_cards then
+			local winflag = false
+			for index, value in ipairs(context.removed) do
+				if value.config.center == G.P_CENTERS.m_steel then
+					winflag = true
+				end
+			end
+			if winflag == true then
+				card.ability.m_triggers = card.ability.m_triggers + 1
+			end
+		end
+	end
+}
 
 SMODS.Joker {
 	key = "marie",
@@ -1012,7 +1260,7 @@ SMODS.Joker {
 local card_is_suit_ref = Card.is_suit
 function Card:is_suit(suit, bypass_debuff, flush_calc)
 	local ret = card_is_suit_ref(self, suit, bypass_debuff, flush_calc)
-	if not ret and not SMODS.has_no_suit(self) and next(SMODS.find_card("j_insj_marie")) then
+	if not ret and not SMODS.has_no_suit(self) and next(SMODS.find_card("j_jkbx_marie")) then
 		return true
 	end
 	return ret

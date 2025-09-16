@@ -1,30 +1,30 @@
 return {
 	["misc"] = {
 		["dictionary"] = {
-			["k_insj_dented"] = "Dented",
-			["k_insj_special"] = "Special",
+			["k_jkbx_dented"] = "Dented",
+			["k_jkbx_special"] = "Special",
 		},
 	},
 	["descriptions"] = {
 		["Other"] = {
-			["j_insj_fake_trading"] = {
+			["j_jkbx_fake_trading"] = {
 				["name"] = "Trading Card",
 				["text"] = {
 					"If {C:attention}first discard{} of round",
-                    "has only {C:attention}1{} card, destroy",
-                    "it and earn {C:money}$3",
+					"has only {C:attention}1{} card, destroy",
+					"it and earn {C:money}$3",
 				},
 			},
-			["j_insj_fake_idol"] = {
+			["j_jkbx_fake_idol"] = {
 				["name"] = "The Idol",
 				["text"] = {
 					"Each played {C:attention}Ace",
-                    "of Spades gives",
-                    "{X:mult,C:white} X2 {} Mult when scored",
-                    "{s:0.8}Card changes every round",
+					"of Spades gives",
+					"{X:mult,C:white} X2 {} Mult when scored",
+					"{s:0.8}Card changes every round",
 				},
 			},
-			["j_insj_fake_to_be_hog"] = {
+			["j_jkbx_fake_to_be_hog"] = {
 				["name"] = "To Be Crankin' Hog",
 				["text"] = {
 					"Gains {C:attention}+1{} Charge after each defeated Blind",
@@ -34,7 +34,7 @@ return {
 				},
 			},
 
-			["j_insj_fake_hog"] = {
+			["j_jkbx_fake_hog"] = {
 				["name"] = "Crankin' Hog",
 				["text"] = {
 					"Loses {C:attention}1{} Charge after each Hand",
@@ -46,7 +46,7 @@ return {
 			},
 		},
 		["Joker"] = {
-			["j_insj_getwellsoon"] = {
+			["j_jkbx_getwellsoon"] = {
 				["name"] = "Get Well Soon Card",
 				["text"] = {
 					"After scoring {C:attention}#1#{C:inactive}[#3#] {C:attention}7{}s,",
@@ -55,7 +55,7 @@ return {
 					"by {C:attention}#2#{} Levels",
 				},
 			},
-			["j_insj_blue_eyes"] = {
+			["j_jkbx_blue_eyes"] = {
 				["name"] = "Blue-Eyes White Joker",
 				["text"] = {
 					"Once per {C:blue}hand{}, if you {C:attention}control{} this {C:attention}face-up Joker,",
@@ -64,7 +64,7 @@ return {
 					'{C:inactive,s:0.5, E:1}"Blue-eyed mfs waiting for you to compliment them"',
 				},
 			},
-			["j_insj_offcamera"] = {
+			["j_jkbx_offcamera"] = {
 				["name"] = "Off-Camera Mining",
 				["text"] = {
 					"Creates a {C:red}Rare Tag{}",
@@ -74,7 +74,7 @@ return {
 					"{C:inactive}(must have room)"
 				},
 			},
-			["j_insj_buffed_joker"] = {
+			["j_jkbx_buffed_joker"] = {
 				["name"] = "Buffed Joker",
 				["text"] = {
 					"{C:blue}Blinds bleed for #1#{C:inactive} [#2#] {C:blue}Hands",
@@ -84,7 +84,7 @@ return {
 					"{C:blue,s:2}BUFFED",
 				},
 			},
-			["j_insj_anvil_shaped"] = {
+			["j_jkbx_anvil_shaped"] = {
 				["name"] = "Suspiciously Anvil-Shaped Green Joker",
 				["text"] = {
 					"-#1# Discard",
@@ -94,7 +94,7 @@ return {
 					"{C:inactive,s:0.7}(can go below 0)",
 				},
 			},
-			["j_insj_get_you"] = {
+			["j_jkbx_get_you"] = {
 				["name"] = "Me when I Get You",
 				["text"] = {
 					"If played hand contains 2 {C:attention}scoring",
@@ -102,7 +102,7 @@ return {
 					"{C:red}destroy{} them and create a {C:red}Rare Joker Tag",
 				},
 			},
-			["j_insj_9_min_crusade"] = {
+			["j_jkbx_9_min_crusade"] = {
 				["name"] = "9-Minute Crusade",
 				["text"] = {
 					"If played hand contains a {C:attention}Two Pair{},",
@@ -110,21 +110,21 @@ return {
 					"otherwise, {C:red}lose the run",
 				},
 			},
-			["j_insj_gd_colon"] = {
+			["j_jkbx_gd_colon"] = {
 				["name"] = "GD Colon",
 				["text"] = {
 					"{C:attention}Retrigger{} the {C:attention}last{} card in each played hand",
 					"{C:inactive,s:0.8}\"I love GD Cologne\"",
 				},
 			},
-			["j_insj_winton"] = {
+			["j_jkbx_winton"] = {
 				["name"] = "Winton",
 				["text"] = {
 					"All played cards gain {C:blue}+1{} permanent {C:blue}Chip{} for each scored card",
 					"{C:inactive,s:0.8}\"hi there\"",
 				},
 			},
-			["j_insj_miku"] = {
+			["j_jkbx_miku"] = {
 				["name"] = "Miku",
 				["text"] = {
 					"{C:attention}+39{} Mult if played hand contains",
@@ -132,7 +132,7 @@ return {
 					"{C:inactive,s:0.8}\"thank you!\"",
 				},
 			},
-			["j_insj_reimu"] = {
+			["j_jkbx_reimu"] = {
 				["name"] = "Reimu",
 				["text"] = {
 					"{C:green}25%{} chance to add {C:dark_edition}Polychrome{} to each played {C:attention}Wild Card",
@@ -140,7 +140,7 @@ return {
 					"{C:inactive,s:0.8}\"I love not thinking!\"",
 				},
 			},
-			["j_insj_nobara"] = {
+			["j_jkbx_nobara"] = {
 				["name"] = "Nobara",
 				["text"] = {
 					"{C:green}50%{} chance for each non-Edition Joker to gain a random {C:dark_edition}Edition",
@@ -149,14 +149,23 @@ return {
 					"{C:inactive,s:0.8}\"Let's play a game of chicken!\"",
 				},
 			},
-			["j_insj_birthday"] = {
+			["j_jkbx_miwa"] = {
+				["name"] = "Miwa",
+				["text"] = {
+					"{C:attention}Middle{} card in played hand{}",
+					"gives {C:blue}+#1#{} Chips when scored",
+					"{C:inactive}Only works on odd-length hands",
+					"{C:inactive,s:0.8}\"Hello, useless Miwa here.\"",
+				},
+			},
+			["j_jkbx_birthday"] = {
 				["name"] = "Birthday Joker",
 				["text"] = {
 					"{X:mult,C:white}X#1#{} Mult if it is someone's {C:dark_edition}Birthday",
 				},
 			},
 
-			["j_insj_gentrification"] = {
+			["j_jkbx_gentrification"] = {
 				["name"] = "Gentrification",
 				["text"] = {
 					"All cards are {C:attention}4s{}",
@@ -164,7 +173,7 @@ return {
 				},
 			},
 
-			["j_insj_surgeon"] = {
+			["j_jkbx_surgeon"] = {
 				["name"] = "I  Am  A Surgeon",
 				["text"] = {
 					"{C:attention}Retrigger{} the {C:attention}Nth{} card in each hand {C:attention}#1#{} times",
@@ -172,7 +181,7 @@ return {
 				},
 			},
 
-			["j_insj_to_be_hog"] = {
+			["j_jkbx_to_be_hog"] = {
 				["name"] = "To Be Crankin' Hog",
 				["text"] = {
 					"Gains {C:attention}+1{} Charge after each defeated Blind",
@@ -182,7 +191,7 @@ return {
 				},
 			},
 
-			["j_insj_hog"] = {
+			["j_jkbx_hog"] = {
 				["name"] = "Crankin' Hog",
 				["text"] = {
 					"Loses {C:attention}1{} Charge after each Hand",
@@ -193,7 +202,7 @@ return {
 				},
 			},
 
-			["j_insj_load_goku"] = {
+			["j_jkbx_load_goku"] = {
 				["name"] = "Load-Bearing Goku",
 				["text"] = {
 					"Creates {C:dark_edition}The Soul{} when obtained {C:inactive}(don't need room)",
@@ -202,7 +211,18 @@ return {
 				},
 			},
 
-			["j_insj_armed_dangerous"] = {
+			["j_jkbx_merge_nolook"] = {
+				["name"] = "Merging Without Looking",
+				["text"] = {
+					"{C:dark_edition}Merge{} into the Joker to the right {C:attention}without looking",
+					"{C:red}destroy{} that Joker and gain {C:attention}10%{} of its",
+					"{C:money}Sell Value{} as {X:mult,C:white}XMult{}",
+					"{C:inactive}(currently {X:mult,C:white}X#1#{C:inactive} Mult)",
+					"{C:inactive,s:0.6}\"What kind of asshole would drive one of these?\"",
+				},
+			},
+
+			["j_jkbx_armed_dangerous"] = {
 				["name"] = "ARMED AND DANGEROUS!",
 				["text"] = {
 					"{C:green}#1# in #2#{} chance to {C:attention}Retrigger{} each scored card",
@@ -211,7 +231,7 @@ return {
 				},
 			},
 
-			["j_insj_nanami"] = {
+			["j_jkbx_nanami"] = {
 				["name"] = "Work Is Shit!",
 				["text"] = {
 					"Selects a random {C:blue}Common Joker{} each {C:attention}Ante",
@@ -221,14 +241,15 @@ return {
 					"{C:inactive}(currently {X:mult,C:white}X#2#{C:inactive} Mult and {C:money}$#4#{})",
 				},
 			},
-			["j_insj_compare_number"] = {
+			["j_jkbx_compare_number"] = {
 				["name"] = '["name"] = "Attempt to compare Number with Table"',
 				["text"] = {
 					'"{X;mult,C;white}X#1#{} Mult if",',
 					'"{C;attention}Talisman{} is installed"',
 				},
 			},
-			["j_insj_eekum_jokum"] = {
+
+			["j_jkbx_eekum_jokum"] = {
 				["name"] = 'Eekum Bokum',
 				["text"] = {
 					'{C:money}Sell{} this card after {C:attention}#2# {C:inactive}[#1#]{} Rounds',
@@ -236,7 +257,31 @@ return {
 					"{C:inactive}(don't need room)"
 				},
 			},
-			["j_insj_demoknight"] = {
+
+			["j_jkbx_lapse_blue"] = {
+				["name"] = 'Lapse Blue',
+				["text"] = {
+					"{C:red}Drains{} the {C:blue}Chip Value{} of all scored cards",
+					"Also {C:red}drains{} {C:blue}Extra Chip Value{} of cards",
+					"and removes {C:attention}Bonus Card{} and {C:attention}Stone Card{} enhancements",
+					"This Joker gains {C:attention}2.5%{} of drained {C:blue}Chip Value{} as {X:chips,C:white}XChips",
+					"{C:inactive}(currently {X:blue,C:white}X#1#{C:inactive} Chips",
+					"{C:inactive,s:0.8}\"You take the amplified...\"",
+				},
+			},
+
+			["j_jkbx_reversal_red"] = {
+				["name"] = 'Reversal Red',
+				["text"] = {
+					"If played hand contains a scoring {C:attention}5{}",
+					"followed by a scoring {C:attention}Queen{},",
+					"return all {C:attention}played{} or {C:attention}discarded{} cards to the {C:attention}deck",
+					"with {X:mult,C:white}X0.25{} extra {X:mult,C:white}Xmult{}",
+					"{C:inactive,s:0.8}\"And smash it together with the reversal...\"",
+				},
+			},
+
+			["j_jkbx_demoknight"] = {
 				["name"] = 'Demoknight TF2',
 				["text"] = {
 					"{C:attention}Pins self to {C:attention}leftmost{} Joker Slot when {C:attention}Blind{} is selected",
@@ -250,7 +295,7 @@ return {
 					'{C:inactive,s:0.7}"Demoknight\'s Charge is C O M P L I C A T E D" - Solarlight TF2',
 				},
 			},
-			["j_insj_smack"] = {
+			["j_jkbx_smack"] = {
 				["name"] = 'SMACK',
 				["text"] = {
 					"{C:attention}Smacks{} the joker to the {C:attention}Right{} with a {C:dark_edition}Frying Pan",
@@ -259,13 +304,13 @@ return {
 					"{C:inactive}(currently {X:mult,C:white}X#2#{C:inactive} Mult)",
 				},
 			},
-			["j_insj_jibnor"] = {
+			["j_jkbx_jibnor"] = {
 				["name"] = 'Jibnor',
 				["text"] = {
 					"{C:red}#1#{} Mult",
 				},
 			},
-			["j_insj_job_app"] = {
+			["j_jkbx_job_app"] = {
 				["name"] = 'Job Application',
 				["text"] = {
 					"{C:red}Lose $10 when added to Deck",
@@ -274,7 +319,31 @@ return {
 					"{C:red}Red{} effects do not trigger if you have at least {C:money}$10,000"
 				},
 			},
-			["j_insj_marie"] = {
+			["j_jkbx_megatron"] = {
+				["name"] = "Megatron Enters the Dungeon",
+				["text"] = {
+					{
+						"Megatron {C:attention}Enters{} the {C:dark_edition}Dungeon{} each time {C:attention}Steel Cards{} are destroyed",
+						"Advance to next {C:attention}Room{} when {C:attention}Steel Cards{} are destroyed",
+					},
+					{
+						"Gains {X:mult,C:white}X0.05{} Mult per {C:money}$1{} lost",
+						"{C:inactive}(currently {X:mult,C:white}X#4#{C:inactive} Mult)",
+						"{V:1}#1#",
+					},
+					{
+						"Earn {C:money}$2{} for each {C:attention}Steel Card{} destroyed",
+						"{V:2}#2#",
+					},
+					{
+						"Create a {C:attention}Rare Tag{} if this Joker is in the {C:attention}leftmost{} slot when {C:attention}Boss Blind{} is selected",
+						"Create a {C:attention}Voucher Tag{} if this Joker is in the {C:attention}rightmost{} slot when {C:attention}Boss Blind{} is selected",
+						"{V:3}#3#",
+					},
+				},
+			},
+
+			["j_jkbx_marie"] = {
 				["name"] = "Marie",
 				["text"] = {
 					"This Joker is {C:dark_edition}Colorblind",
@@ -285,13 +354,13 @@ return {
 					"{C:inactive}(currently {C:dark_edition}#1#%{C:inactive} progress to next BP Gain)"
 				},
 			},
-			["j_insj_jevil"] = {
+			["j_jkbx_jevil"] = {
 				["name"] = "Jevil",
 				["text"] = {
 					"{C:dark_edition,s:3,E:1}I CAN DO ANYTHING!!",
 				},
 			},
-			["j_insj_notepad"] = {
+			["j_jkbx_notepad"] = {
 				["name"] = "Notepad",
 				["text"] = {
 					"{X:chips,C:white}X#1#{} Chips for each {C:dark_edition}Balatro Mod installed{} {C:inactive}(#3#)",
@@ -299,7 +368,7 @@ return {
 					"{C:inactive,s:0.7}(File System collection - Designed for Windows!)"
 				},
 			},
-			["j_insj_mantis"] = {
+			["j_jkbx_mantis"] = {
 				["name"] = "Psycho Mantis",
 				["text"] = {
 					"{C:dark_edition}Copies{} the abilities of {C:attention}adjacent Jokers{}",

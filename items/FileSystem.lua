@@ -7,20 +7,20 @@ Jokebox.Steam_Directory = "C:\\Program Files (x86)\\Steam\\steamapps\\common"
 
 ---Isolate profile names
 
-Insj_Profile_Table = NFS.getDirectoryItems("C:/Users")
+jkbx_Profile_Table = NFS.getDirectoryItems("C:/Users")
 
 
-table.insjremovekey(Insj_Profile_Table, "All Users")
-table.insjremovekey(Insj_Profile_Table, "Default")
-table.insjremovekey(Insj_Profile_Table, "Default User")
-table.insjremovekey(Insj_Profile_Table, "Public")
-table.insjremovekey(Insj_Profile_Table, "desktop.ini")
+table.jkbxremovekey(jkbx_Profile_Table, "All Users")
+table.jkbxremovekey(jkbx_Profile_Table, "Default")
+table.jkbxremovekey(jkbx_Profile_Table, "Default User")
+table.jkbxremovekey(jkbx_Profile_Table, "Public")
+table.jkbxremovekey(jkbx_Profile_Table, "desktop.ini")
 
 ---Get the path of the Balatro Mods folder
 local mod_path = "" .. SMODS.current_mod.path
 Jokebox.path = mod_path
 
-local mods_path_temp = insj_string_split(Jokebox.path, "Mods")
+local mods_path_temp = jkbx_string_split(Jokebox.path, "Mods")
 Jokebox.mods_folder_path = string.sub(mods_path_temp, 1, #mods_path_temp) .. "Mods"
 
 Jokebox.Get_Completion_Percentages = function()
@@ -74,7 +74,7 @@ end
 
 Jokebox.Mantis_Games.Quip = "You! You doubt my power?"
 
-function insj_Mantis_Quipcheck()
+function jkbx_Mantis_Quipcheck()
 	if #Jokebox.Mantis_Games.List >= 100 then
 		Jokebox.Mantis_Games.Quip = "Your mind is disgustingly populated."
 	elseif #Jokebox.Mantis_Games.List >= 50 then
@@ -264,7 +264,7 @@ SMODS.Joker {
 
 	calculate = function(self, card, context)
 		---Changes dialogue on every context
-		insj_Mantis_Quipcheck()
+		jkbx_Mantis_Quipcheck()
 
 		if not G.jokers then return nil end
 		---Mantis' effects only trigger if he is in the 4th Joker Slot

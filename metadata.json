@@ -4,7 +4,7 @@
 	"display_name": "Jokebox",
 	"author": ["Maratby"],
 	"description": "My mandatory Stupid Shit Mod, where I make things that are funny because they are funny. I don't want to completely eliminate balance, though.",
-	"prefix": "insj",
+	"prefix": "jkbx",
 	"main_file": "jokebox.lua",
 	"priority": 8,
 	"badge_colour": "000094",
