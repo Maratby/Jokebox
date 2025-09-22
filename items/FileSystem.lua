@@ -20,7 +20,7 @@ table.jkbxremovekey(jkbx_Profile_Table, "desktop.ini")
 local mod_path = "" .. SMODS.current_mod.path
 Jokebox.path = mod_path
 
-local mods_path_temp = jkbx_string_split(Jokebox.path, "Mods")
+local mods_path_temp = Jokebox.string_split(Jokebox.path, "Mods")
 Jokebox.mods_folder_path = string.sub(mods_path_temp, 1, #mods_path_temp) .. "Mods"
 
 Jokebox.Get_Completion_Percentages = function()

@@ -11,6 +11,11 @@ SMODS.current_mod.optional_features = function()
 	return { retrigger_joker = true }
 end
 
+function Jokebox.ease_blind_size(mod)
+	G.GAME.blind.chips = math.floor(G.GAME.blind.chips * mod)
+	G.GAME.blind.chip_text = number_format(G.GAME.blind.chips)
+end
+
 SMODS.Atlas {
 	key = "JokeboxJokers",
 	path = "jokers.png",
@@ -128,7 +133,7 @@ function table.jkbxremovekey(table, key)
 end
 
 ---split string at symbol (thanks Meta, Rock Muncher)
-function jkbx_string_split(string, symbol)
+function Jokebox.string_split(string, symbol)
 	local index = string.find(string, symbol)
 	local string1 = string.sub(string, 1, index - 1)
 	local string2 = string.sub(string, index + 1, -1)
@@ -136,6 +141,7 @@ function jkbx_string_split(string, symbol)
 end
 
 SMODS.load_file("items/Jokers.lua")()
+SMODS.load_file("items/quickhack.lua")()
 
 if Jokebox_Config.FileSystem == true then
 	SMODS.load_file("items/FileSystem.lua")()
@@ -241,6 +247,7 @@ Jokebox.Stickerclear = function(target)
 		end
 	end
 end
+
 ---jevil noises
 SMODS.Sound({
 	key = "jevil_music",
@@ -374,6 +381,13 @@ SMODS.Sound({
 	path = "deltarune-explosion.mp3",
 	pitch = 1,
 })
+
+SMODS.Sound({
+	key = "splat",
+	path = "ralsei-splat.mp3",
+	pitch = 1,
+})
+
 ---Config UI
 
 Jokebox_Mod.config_tab = function()
@@ -382,7 +396,6 @@ Jokebox_Mod.config_tab = function()
 		config = { align = "m", r = 0.1, padding = 0.1, colour = G.C.BLACK, minw = 8, minh = 6 },
 		nodes = {
 			{ n = G.UIT.R, config = { align = "cl", padding = 0, minh = 0.1 }, nodes = {} },
-
 			{
 				n = G.UIT.R,
 				config = { align = "cl", padding = 0 },
@@ -420,6 +433,27 @@ Jokebox_Mod.config_tab = function()
 						config = { align = "c", padding = 0 },
 						nodes = {
 							{ n = G.UIT.T, config = { text = "Enable \"Eekum Bokum\"'s info_queues (they crash sometimes?)", scale = 0.5, colour = G.C.UI.TEXT_LIGHT } },
+						}
+					},
+				}
+			},
+
+			{
+				n = G.UIT.R,
+				config = { align = "cl", padding = 0 },
+				nodes = {
+					{
+						n = G.UIT.C,
+						config = { align = "cl", padding = 0.05 },
+						nodes = {
+							create_toggle { col = true, label = "", scale = 1, w = 0, shadow = true, ref_table = Jokebox_Config, ref_value = "superlancer" },
+						}
+					},
+					{
+						n = G.UIT.C,
+						config = { align = "c", padding = 0 },
+						nodes = {
+							{ n = G.UIT.T, config = { text = "Enable Super Lancer", scale = 0.5, colour = G.C.UI.TEXT_LIGHT } },
 						}
 					},
 				}

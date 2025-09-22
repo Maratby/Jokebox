@@ -3,6 +3,30 @@ return {
 		["dictionary"] = {
 			["k_jkbx_dented"] = "Dented",
 			["k_jkbx_special"] = "Special",
+			["k_jkbx_vest"] = "I told you the armor would help!",
+
+			["k_jkbx_quickhack_title"] = "Select Hacks",
+			["k_jkbx_cancel"] = "Exit",
+
+			["k_jkbx_virus"] = "Virus [2]",
+			["k_jkbx_virus_desc"] = "X0.9 blind size, clears Foil/Holo/Poly from all jokers",
+
+			["k_jkbx_shutdown"] = "Shutdown [4]",
+			["k_jkbx_shutdown_desc"] = "X0.75 blind size",
+
+			["k_jkbx_reroute"] = "Reroute Power [8]",
+			["k_jkbx_reroute_desc"] = "X3 blind size, disable blind effect",
+
+			["k_jkbx_overload"] = "Overload [6]",
+			["k_jkbx_overload_desc"] = "X2 blind size, create an Uncommon or Rare Tag",
+
+			["k_jkbx_siphon"] = "Siphon [8]",
+			["k_jkbx_siphon_desc"] = "X5 blind size, permanently gain +1 joker slot",
+
+			["k_jkbx_virtualise"] = "Virtualise [6]",
+			["k_jkbx_virtualise_desc"] = "X1.5 blind size, +3 Hand Size until end of round",
+
+			["k_jkbx_vram_display"] = "VRAM",
 		},
 	},
 	["descriptions"] = {
@@ -165,6 +189,13 @@ return {
 				},
 			},
 
+			["j_jkbx_lancer"] = {
+				["name"] = "Lancer",
+				["text"] = {
+					"{X:green,C:white}^1{} Glop before scoring",
+				},
+			},
+
 			["j_jkbx_gentrification"] = {
 				["name"] = "Gentrification",
 				["text"] = {
@@ -241,11 +272,27 @@ return {
 					"{C:inactive}(currently {X:mult,C:white}X#2#{C:inactive} Mult and {C:money}$#4#{})",
 				},
 			},
+
+			["j_jkbx_armoured_vest"] = {
+				["name"] = "Armoured Vest",
+				["text"] = {
+					"{C:attention}+25 Armor",
+					"Reduce blind requirement by {C:attention}30%",
+					"Saves you from {C:red}death{} once, then {C:red}self-destructs",
+				},
+			},
+
 			["j_jkbx_compare_number"] = {
 				["name"] = '["name"] = "Attempt to compare Number with Table"',
 				["text"] = {
 					'"{X;mult,C;white}X#1#{} Mult if",',
 					'"{C;attention}Talisman{} is installed"',
+				},
+			},
+			["j_jkbx_interfacer"] = {
+				["name"] = 'Cyberjoker',
+				["text"] = {
+					"{C:green}Quickhack{} every {C:attention}Boss Blind",
 				},
 			},
 
@@ -310,6 +357,25 @@ return {
 					"{C:red}#1#{} Mult",
 				},
 			},
+
+			["j_jkbx_gamblers_fallacy"] = {
+				["name"] = 'Gambler\'s Fallacy',
+				["text"] = {
+					{
+						"{C:green}#1# in #2#{} chance to create",
+						"{C:dark_edition}The Soul{} when {C:attention}Boss Blind{} is selected",
+					},
+					{
+						"{C:green}#3# in #4#{} chance to {C:dark_edition}win the run",
+						"when {C:attention}Boss Blind{} is selected",
+					},
+					{
+						"Lose {C:attention}25%{} of your {C:money}money{} on a fail",
+						"{C:red}self-destructs{} on a success",
+					}
+				},
+			},
+
 			["j_jkbx_job_app"] = {
 				["name"] = 'Job Application',
 				["text"] = {
@@ -339,6 +405,24 @@ return {
 						"Create a {C:attention}Rare Tag{} if this Joker is in the {C:attention}leftmost{} slot when {C:attention}Boss Blind{} is selected",
 						"Create a {C:attention}Voucher Tag{} if this Joker is in the {C:attention}rightmost{} slot when {C:attention}Boss Blind{} is selected",
 						"{V:3}#3#",
+					},
+				},
+			},
+
+			["j_jkbx_inigo_montoya"] = {
+				["name"] = "Inigo Montoya",
+				["text"] = {
+					{
+						"Each scored {C:attention}Jack{} gives {X:mult,C:white}X#1#{} Mult",
+						"for each scoring {C:attention}Jack{} in played hand",
+						"{C:inactive}(minimum X1 Mult)",
+					},
+					{
+						"Each {C:attention}Jack{} in your Full Deck permanently gains",
+						"{X:mult,C:white}X#2#{} Mult when a {C:attention}Face Card{} is destroyed",
+					},
+					{
+						"{C:inactive,s:1.2, E:1}\"You killed my father. Prepare to die.\"",
 					},
 				},
 			},

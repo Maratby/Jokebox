@@ -121,8 +121,7 @@ SMODS.Joker {
 			card.ability.extra.hands = card.ability.extra.handsmax
 		end
 		if context.after and card.ability.extra.hands <= card.ability.extra.handsmax then
-			G.GAME.blind.chips = math.floor(G.GAME.blind.chips - G.GAME.blind.chips * 0.1)
-			G.GAME.blind.chip_text = number_format(G.GAME.blind.chips)
+			Jokebox.ease_blind_size(0.9)
 			card.ability.extra.hands = card.ability.extra.hands - 1
 			card:juice_up()
 		end
@@ -417,6 +416,103 @@ SMODS.Joker {
 			if context.destroying_card.jkbx_gotten == true then
 				return { remove = true }
 			end
+		end
+	end
+}
+
+SMODS.Joker {
+	key = "armoured_vest",
+	blueprint_compat = false,
+	discovered = true,
+	rarity = 2,
+	cost = 10,
+	atlas = "JokeboxBetter2X",
+	pos = { x = 5, y = 3 },
+	loc_vars = function(self, info_queue, card)
+	end,
+	calculate = function(self, card, context)
+		if context.setting_blind then
+			Jokebox.ease_blind_size(0.7)
+		end
+		if context.end_of_round and context.game_over and context.main_eval then
+			G.E_MANAGER:add_event(Event({
+				func = function()
+					G.hand_text_area.blind_chips:juice_up()
+					G.hand_text_area.game_chips:juice_up()
+					play_sound('tarot1')
+					card:start_dissolve()
+					return true
+				end
+			}))
+			return {
+				message = localize('k_saved_ex'),
+				saved = 'k_jkbx_vest',
+				colour = G.C.ATTENTION
+			}
+		end
+	end
+}
+
+SMODS.Joker {
+	key = "gamblers_fallacy",
+	rarity = 3,
+	cost = 4,
+	unlocked = true,
+	discovered = true,
+	blueprint_compat = false,
+	eternal_compat = true,
+	perishable_compat = true,
+	config = { extra = { odds = 10, odds2 = 1000 } },
+	atlas = "JokeboxBetter2X",
+	pos = { x = 6, y = 3 },
+	loc_vars = function(self, info_queue, card)
+		local new_numerator, new_denominator = SMODS.get_probability_vars(card, 1, card.ability.extra.odds,
+			'Jokebox_Gamblers Fallacy')
+		local new_numerator2, new_denominator2 = SMODS.get_probability_vars(card, 1, card.ability.extra.odds2,
+			'Jokebox_Gamblers Fallacy')
+		return { vars = { new_numerator, new_denominator, new_numerator2, new_denominator2, } }
+	end,
+	calculate = function(self, card, context)
+		if context.setting_blind and context.blind.boss then
+			if SMODS.pseudorandom_probability(card, 'IdleDeathGamble', 1, card.ability.extra.odds, 'Jkbx_gamblers_fallacy') then
+				G.E_MANAGER:add_event(Event({
+					func = (function()
+						G.E_MANAGER:add_event(Event({
+							func = function()
+								SMODS.add_card({ key = 'c_soul', key_append = '90%_quit_before_winning_big_jkbx' })
+								G.GAME.consumeable_buffer = 0
+								return true
+							end
+						}))
+						card_eval_status_text(card, 'extra', nil, nil, nil,
+							{ message = localize('k_plus_spectral'), colour = G.C.SECONDARY_SET.Spectral })
+						card:start_dissolve()
+						return true
+					end)
+				}))
+			elseif SMODS.pseudorandom_probability(card, 'IdleDeathGamble', 1, card.ability.extra.odds2, 'Jkbx_gamblers_fallacy') then
+				win_game()
+				card:start_dissolve()
+				G.GAME.won = true
+			else
+				ease_dollars(-(G.GAME.dollars / 4))
+			end
+		end
+	end
+}
+
+SMODS.Joker {
+	key = "lancer",
+	blueprint_compat = false,
+	discovered = true,
+	rarity = 1,
+	cost = 1,
+	atlas = "JokeboxJokers",
+	pos = { x = 2, y = 2 },
+	calculate = function(self, card, context)
+		if math.random(1, 14) == 14 or context.joker_main or Jokebox_Config.superlancer then
+			play_sound("jkbx_splat", 1, 1)
+			card:juice_up()
 		end
 	end
 }
@@ -1107,12 +1203,12 @@ end
 
 local cardSetCostHook = Card.set_cost
 function Card:set_cost()
-    local ret = cardSetCostHook(self)
-		if next(SMODS.find_card("j_jkbx_word_on_the_street")) then
-			self.cost = 5
-			self.sell_cost = 5
-		end
-    return ret
+	local ret = cardSetCostHook(self)
+	if next(SMODS.find_card("j_jkbx_word_on_the_street")) then
+		self.cost = 5
+		self.sell_cost = 5
+	end
+	return ret
 end
 
 SMODS.Joker {
@@ -1193,6 +1289,22 @@ SMODS.Joker {
 }
 
 SMODS.Joker {
+	key = "interfacer",
+	pos = { x = 3, y = 1 },
+	atlas = "JokeboxJokers",
+	rarity = 3,
+	blueprint_compat = true,
+	discovered = true,
+	cost = 11,
+	calculate = function(self, card, context)
+		if context.setting_blind and context.blind.boss and not G.Jokebox_Quickhack_Active then
+			Jokebox.create_uibox_Quickhack(card)
+			G.Jokebox_Quickhack_Active = true
+		end
+	end
+}
+
+SMODS.Joker {
 	key = "marie",
 	pos = { x = 0, y = 1 },
 	soul_pos = { x = 0, y = 2 },
@@ -1227,7 +1339,7 @@ SMODS.Joker {
 		if context.end_of_round then
 			card.ability.eaten = card.ability.eaten * card.ability.blind_rates
 			while card.ability.eaten >= 100 do
-				card.ability.eaten = card.ability.eaten - 100
+				card.ability.eaten = math.floor((card.ability.eaten - 100) + 0.5)
 				card.ability.extra.BP = card.ability.extra.BP + 1
 			end
 		end
@@ -1251,7 +1363,12 @@ SMODS.Joker {
 			if Compendium then
 				temptally = temptally + 1
 			end
-			xchips = 2 * temptally
+			if Curator then
+				temptally = temptally + 1
+			end
+			return {
+				xchips = 1.2 ^ temptally
+			}
 		end
 	end
 }
@@ -1332,6 +1449,54 @@ SMODS.Joker {
 		if context.repetition and context.cardarea == G.play then
 			return {
 				repetitions = math.random(1, 5),
+			}
+		end
+	end
+}
+
+SMODS.Joker {
+	key = "inigo_montoya",
+	pos = { x = 6, y = 0 },
+	soul_pos = { x = 6, y = 1 },
+	atlas = "JokeboxBetter2X",
+	rarity = 4,
+	blueprint_compat = false,
+	discovered = false,
+	cost = 20,
+	config = { increase = 0.75, increase2 = 0.25 },
+	loc_vars = function(self, info_queue, card)
+		return { vars = { card.ability.increase, card.ability.increase2 } }
+	end,
+	calculate = function(self, card, context)
+		if (context.cards_destroyed and (context.glass_shattered and #context.glass_shattered > 0))
+			or (context.remove_playing_cards and (context.removed and #context.removed > 0)) then
+			local destroytally = 0
+			for index, value in ipairs(context.removed) do
+				if value:is_face() then
+					destroytally = destroytally + 1
+				end
+				for index, value in ipairs(G.playing_cards) do
+					if value:get_id() == 11 then
+						value.ability.perma_x_mult = value.ability.perma_x_mult or 0
+						value.ability.perma_x_mult = value.ability.perma_x_mult + card.ability.increase2 * destroytally
+					end
+				end
+				return {
+					extra = { message = localize('k_upgrade_ex'), colour = G.C.CHIPS },
+					colour = G.C.CHIPS,
+					card = card
+				}
+			end
+		end
+		if context.individual and context.cardarea == G.play and context.other_card:get_id() == 11 then
+			local xmult_mod = 0
+			for index, value in ipairs(context.scoring_hand) do
+				if value:get_id() == 11 then
+					xmult_mod = xmult_mod + 1
+				end
+			end
+			return {
+				xmult = math.max(card.ability.increase * xmult_mod, 1)
 			}
 		end
 	end
