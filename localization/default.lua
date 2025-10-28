@@ -8,22 +8,22 @@ return {
 			["k_jkbx_quickhack_title"] = "Select Hacks",
 			["k_jkbx_cancel"] = "Exit",
 
-			["k_jkbx_virus"] = "Virus [2]",
+			["k_jkbx_virus"] = "Contagion [2]",
 			["k_jkbx_virus_desc"] = "X0.9 blind size, clears Foil/Holo/Poly from all jokers",
 
-			["k_jkbx_shutdown"] = "Shutdown [4]",
+			["k_jkbx_shutdown"] = "Short Circuit [4]",
 			["k_jkbx_shutdown_desc"] = "X0.75 blind size",
 
-			["k_jkbx_reroute"] = "Reroute Power [8]",
+			["k_jkbx_reroute"] = "Weapon Glitch [8]",
 			["k_jkbx_reroute_desc"] = "X3 blind size, disable blind effect",
 
-			["k_jkbx_overload"] = "Overload [6]",
+			["k_jkbx_overload"] = "Call Backup [6]",
 			["k_jkbx_overload_desc"] = "X2 blind size, create an Uncommon or Rare Tag",
 
 			["k_jkbx_siphon"] = "Siphon [8]",
 			["k_jkbx_siphon_desc"] = "X5 blind size, permanently gain +1 joker slot",
 
-			["k_jkbx_virtualise"] = "Virtualise [6]",
+			["k_jkbx_virtualise"] = "Ping [6]",
 			["k_jkbx_virtualise_desc"] = "X1.5 blind size, +3 Hand Size until end of round",
 
 			["k_jkbx_vram_display"] = "VRAM",
@@ -435,7 +435,6 @@ return {
 					"Converts stolen {C:blue}Chips{} into {C:dark_edition}BP{} at {C:attention}end of round",
 					"{X:chips,C:white}X2{} Chips for each of{C:dark_edition,E:1}Maratby's{} mods installed",
 					"{C:inactive,s:0.9}(That's me! I'm the mod dev! :D)",
-					"{C:inactive}(currently {C:dark_edition}#1#%{C:inactive} progress to next BP Gain)"
 				},
 			},
 			["j_jkbx_jevil"] = {

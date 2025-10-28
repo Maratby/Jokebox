@@ -1328,20 +1328,9 @@ SMODS.Joker {
 					local temprand = math.random(5, 10) / 100
 					G.GAME.chips = G.GAME.chips - G.GAME.chips * temprand
 					card.ability.eaten = temp - G.GAME.chips
-					print(card.ability.eaten)
 					return true
 				end
 			}))
-		end
-		if context.before then
-			card.ability.blind_rates = 300 / G.GAME.blind.chips
-		end
-		if context.end_of_round then
-			card.ability.eaten = card.ability.eaten * card.ability.blind_rates
-			while card.ability.eaten >= 100 do
-				card.ability.eaten = math.floor((card.ability.eaten - 100) + 0.5)
-				card.ability.extra.BP = card.ability.extra.BP + 1
-			end
 		end
 		if context.joker_main then
 			local temptally = 1
