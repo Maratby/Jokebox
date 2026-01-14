@@ -2,8 +2,11 @@ return {
 	["misc"] = {
 		["dictionary"] = {
 			["k_jkbx_dented"] = "Dented",
+			["k_jkbx_child"] = "Gullible Twitch Viewer",
 			["k_jkbx_special"] = "Special",
 			["k_jkbx_vest"] = "I told you the armor would help!",
+			['k_jkbx_scry'] = "Investigating...",
+			['k_jkbx_stream_delay'] = "GET REZZED",
 
 			["k_jkbx_quickhack_title"] = "Select Hacks",
 			["k_jkbx_cancel"] = "Exit",
@@ -342,6 +345,24 @@ return {
 					'{C:inactive,s:0.7}"Demoknight\'s Charge is C O M P L I C A T E D" - Solarlight TF2',
 				},
 			},
+			["j_jkbx_hbox_popoff"] = {
+				["name"] = 'Infinite Hungrybox Popoff',
+				["text"] = {
+					"This joker gains {X:mult,C:white}X#1#{} Mult for each",
+					"{C:attention}consecutive Blind{} beaten with {C:attention}1{} Hand",
+					"{C:inactive}(currently {X:mult,C:white}X#2#{C:inactive} Mult)",
+				},
+			},
+
+			["j_jkbx_corrupted"] = {
+				["name"] = 'Corrupted Joker',
+				["text"] = {
+					"{X:mult,C:white}X#1#{} Mult",
+					"Loses {X:mult,C:white}X1{} Mult after each {C:attention}Boss Blind",
+					"{C:red}Expires{} and creates an {C:attention}Uncommon Tag{} when reaching {X:mult,C:white}X0{} Mult",
+				},
+			},
+
 			["j_jkbx_smack"] = {
 				["name"] = 'SMACK',
 				["text"] = {
@@ -355,6 +376,13 @@ return {
 				["name"] = 'Jibnor',
 				["text"] = {
 					"{C:red}#1#{} Mult",
+				},
+			},
+			["j_jkbx_jibble"] = {
+				["name"] = 'Jibble',
+				["text"] = {
+					"{C:attention}Grows Up{} after {C:attention}3{C:inactive}[#1#]{} Rounds",
+					'{C:inactive,s:0.7}"This is where I watched my parents die, Jimbo."',
 				},
 			},
 
@@ -373,6 +401,44 @@ return {
 						"Lose {C:attention}25%{} of your {C:money}money{} on a fail",
 						"{C:red}self-destructs{} on a success",
 					}
+				},
+			},
+
+			["j_jkbx_stream_delay"] = {
+				["name"] = '15 Minute Stream Delay',
+				["text"] = {
+					{
+						"Complete all objectives {C:attention}in order{} within {C:attention}15 Minutes{}",
+						"to create {C:dark_edition}The Soul",
+						"#1# elapsed",
+					},
+					{
+						"{V:1}Grow Up",
+						"{V:2}Have Children",
+						"{V:3}Go to College",
+						"{V:4}Graduate",
+						"{V:5}Get Married",
+						"{V:6}Have 6 Kids",
+						"{V:7}DIE",
+						"{V:8}COME BACK TO LIFE",
+					},
+				},
+			},
+
+			["j_jkbx_zipbomb"] = {
+				["name"] = 'JensAlmanac.zip',
+				["text"] = {
+					"{C:attention}Sell{} this card to {C:red}unzip",
+					"{C:inactive,s:0.7}you can sell it in the leftmost slot to just get rid of it"
+				},
+			},
+
+			["j_jkbx_brawl_wario"] = {
+				["name"] = "Brawl Wario Render",
+				["text"] = {
+					"Earn {C:money}$3{} at {C:attention}end of round",
+					"{C:attention}60%{} chance to {C:money}Wario",
+					"{C:attention}32%{} chance to {C:money}Wario",
 				},
 			},
 
@@ -443,6 +509,64 @@ return {
 					"{C:dark_edition,s:3,E:1}I CAN DO ANYTHING!!",
 				},
 			},
+			["j_jkbx_sage_blue"] = {
+				["name"] = "Sage",
+				["text"] = {
+					"Every {C:attention}discarded{} card",
+					"permanently gains {X:blue,C:white}X#1#{} Chips",
+				},
+			},
+
+			["j_jkbx_kyoko"] = {
+				["name"] = "Kyoko",
+				["text"] = {
+					"{C:attention}Reveal{} the top {C:attention}5{} Cards of your deck after {C:attention}Blind{} is selected",
+					"{C:attention}Play all revealed cards{} in the order they were revealed to",
+					"{C:dark_edition}double{} the values of the played {C:attention}poker hand",
+					"{C:red}Effects do not activate while this Joker is Highlighted",
+				},
+			},
+			["j_jkbx_juno"] = {
+				["name"] = "Juno",
+				["text"] = {
+					{
+						"Upgrade level of {C:dark_edition}every hand{} when {C:attention}Mars{} is used",
+						"Upgrade level of {C:attention}Four of a Kind{} when using any other {C:planet}Planet{} card"
+					},
+					{
+						"{C:dark_edition}Orbital Ray: {X:dark_edition,C:white}#1#%",
+						"Use {C:attention}Mars{} during any {C:attention}Blind{} to activate",
+						"{C:attention}Undebuffs{} all held playing cards",
+						"{C:attention}Flips{} all held playing cards and Jokers {C:attention}face-up",
+						"Clears {C:attention}Stickers{} from all Jokers",
+						"Scored cards give {X:mult,C:white}X1.4{} Mult until {C:attention}end of round",
+					},
+					{
+						"{C:dark_edition}Orbital Ray{} is currently {C:attention}#2#",
+					}
+				},
+			},
+
+			["j_jkbx_ryou"] = {
+				["name"] = "Ryou",
+				["text"] = {
+					"This joker gains {X:blue,C:white}X#1#{} Chips for each",
+					"{C:dark_edition}Extra sound effect{} played",
+					"{C:inactive,s:0.7}(every time play_sound() runs)",
+					"{C:inactive}(currently {X:blue,C:white}X#2#{C:inactive} Chips)",
+				},
+			},
+
+			["j_jkbx_bridget"] = {
+				["name"] = "Bridget",
+				["text"] = {
+					"Your first {C:blue}hand{} each round is {C:green}free{}",
+					"Your first {C:blue}hand{} each round scores {X:inactive,C:white}25%{} less",
+					"This joker gains {X:chips,C:white}X#1#{} Chips if {C:attention}blind is beaten with one hand",
+					"{C:inactive}(currently {X:blue,C:white}X#2#{C:inactive} Chips)",
+				},
+			},
+
 			["j_jkbx_notepad"] = {
 				["name"] = "Notepad",
 				["text"] = {
